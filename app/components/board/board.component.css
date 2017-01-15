@@ -1,0 +1,37 @@
+.board-container {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+table {
+  table-layout: fixed;
+  width:1%;
+  height:1%;
+  margin:auto;
+}
+
+td {
+  border-radius:0;
+  width:50px;
+  height:50px;
+  padding:0;
+}
+
+img {
+  max-width: 35%;
+  max-height: 35%;
+}
+
+.possible-red {
+  background-color:rgba(244,67,54, 0.2) !important;
+  border:1px solid rgb(244,67,54);
+  cursor:pointer;
+}
+
+.possible-blue {
+  background-color:rgba(3,155,229,0.2) !important;
+  border:1px solid rgb(3, 155, 229); /*#039be5*/
+  cursor:pointer;
+}

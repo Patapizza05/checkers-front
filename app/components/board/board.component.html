@@ -1,0 +1,28 @@
+
+<table class="centered center-align">
+  <tbody>
+  <tr *ngFor="let row of board">
+    <td *ngFor="let cell of row"
+        [ngClass]="{
+            'grey lighten-2' : cell.color,
+            'white' : !cell.color,
+            'possible-blue': isActive(cell) && isActiveColor1(),
+             'possible-red': isActive(cell) && !isActiveColor1()
+            }">
+
+
+
+      <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light" [ngClass]="{red: cell.pawn.color, blue:!cell.pawn.color}" (click)="select(cell);">
+        <i>
+          <img src="{{crownIconPath}}"/>
+        </i>
+      </a>
+
+
+
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
