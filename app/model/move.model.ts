@@ -2,11 +2,11 @@ import {Pawn} from "./pawn.model";
 import {Cell} from "./cell.model";
 export class Move {
   cell: Cell;
-  pawnToDelete: Pawn;
+  pawnToDeleteCell: Cell;
 
-  constructor(cell: Cell, pawnToDelete: Pawn) {
+  constructor(cell: Cell, pawnToDeleteCell: Cell) {
     this.cell = cell;
-    this.pawnToDelete = pawnToDelete;
+    this.pawnToDeleteCell = pawnToDeleteCell;
   }
 
 }

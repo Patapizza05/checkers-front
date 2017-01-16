@@ -35,7 +35,7 @@ export class Pawn {
     if (hasMandatoryMoves) {
       let mandatoryMoves : Move[] = [];
       for(let move of result) {
-        if (move.pawnToDelete != null) { //mandatory
+        if (move.pawnToDeleteCell != null) { //mandatory
           mandatoryMoves.push(move);
         }
       }
@@ -54,12 +54,12 @@ export class Pawn {
         console.log("add");
       }
       else if (cell.pawn.color != this.color) {
-        let currentCol = currentCell.column;
-        let currentRow = currentCell.row;
+        let currentCol = currentCell.column + (col - currentCell.column)*2;
+        let currentRow = currentCell.row + (row - currentCell.row)*2;
         let cell2: Cell = board[currentRow][currentCol];
 
         if (cell2.pawn == null) {
-          result.push(new Move(cell2, cell.pawn));
+          result.push(new Move(cell2, cell));
           console.log("add");
           isMandatory = true;
         }

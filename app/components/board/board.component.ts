@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Cell} from "../../model/cell.model";
 import {Pawn} from "../../model/pawn.model";
+import {Move} from "../../model/move.model";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -16,8 +17,8 @@ export class BoardComponent {
 
   board: Cell[][] = [];
 
-  activePawn: Pawn;
-  activeCells: Cell[] = [];
+  activeCell: Cell;
+  activeMoves: Move[] = [];
 
   constructor() {
     this.initialize();
@@ -56,28 +57,52 @@ export class BoardComponent {
 
   select(cell: Cell) {
     if (cell != null && cell.pawn != null) {
-      this.activeCells = [];
+      this.activeMoves = [];
       let x = cell.column;
       let y = cell.row;
 
       let moves = cell.pawn.getPossibleMoves(cell, this.board);
-      for(let move of moves) {
-        this.activePawn = cell.pawn;
-        this.activeCells.push(move.cell);
+      for (let move of moves) {
+        this.activeCell = cell;
+        this.activeMoves.push(move);
       }
     }
   }
 
-  isActive(cell: Cell) {
-    if (this.activeCells.indexOf(cell) > -1) {
-      console.log("true");
-      return true;
+  move(move: Move) {
+    if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.cell == null) return false;
+
+    if (move.pawnToDeleteCell != null && move.pawnToDeleteCell.pawn != null) {
+      move.pawnToDeleteCell.pawn = null;
     }
-    return false;
+
+    let pawn = this.activeCell.pawn;
+    this.activeCell.pawn = null;
+    move.cell.pawn = pawn;
+
+    this.activeMoves = [];
+  }
+
+  findPawn(pawn: Pawn): Cell {
+    try {
+      return this.board.find(row => row.find(c => c.pawn == pawn) != null).find(c => c.pawn == pawn);
+    } catch(ex) {
+
+    }
+    return null;
+  }
+
+  getMoveFromCell(cell: Cell): Move {
+    return this.activeMoves.find(m => m.cell == cell);
+  }
+
+  isActive(cell: Cell) {
+    return this.activeMoves.find(m => m.cell == cell) != null;
+
   }
 
   isActiveColor1(): boolean {
-    return this.activePawn != null && !this.activePawn.color;
+    return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.color;
   }
 
 }
