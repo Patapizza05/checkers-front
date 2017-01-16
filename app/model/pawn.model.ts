@@ -1,72 +1,82 @@
 import {Cell} from "./cell.model";
 import {Move} from "./move.model";
+import {Position} from "./position.model";
+import {Cells} from "./cells.model";
 export class Pawn {
   isQueen: boolean = false;
   color: boolean;
   isGoUp: boolean;
 
-  constructor(color:boolean) {
+  constructor(color: boolean) {
     this.color = color;
     this.isGoUp = color;
   }
 
-  getPossibleMoves(cell: Cell, board: Cell[][]) : Move[] {
-    let col = cell.column;
-    let row = cell.row;
+  getPossibleMoves(current: Cell, cells: Cells): Move[] {
+    let col = current.column;
+    let row = current.row;
 
-    let result : Move[] = [];
+    let result: Move[] = [];
 
-    let down : boolean = this.isGoUp && !this.isQueen;
+    let down: boolean = this.isGoUp && !this.isQueen;
+    let up: boolean = !this.isGoUp && !this.isQueen;
+    let queen: boolean = this.isQueen;
 
-    let up : boolean = !this.isGoUp && !this.isQueen;
-    let both : boolean = this.isQueen;
+    let step = queen ? -1 : 1;
 
-    let hasMandatoryMoves : boolean = false;
+    console.log(current.pawn.isQueen+":"+step);
 
-    if (up || both) {
-      console.log("up");
-      hasMandatoryMoves = this.tryAddMove(cell, col-1, row+1, board, result)  || hasMandatoryMoves;
-      hasMandatoryMoves = this.tryAddMove(cell, col+1, row+1, board, result) || hasMandatoryMoves;
+    let hasMandatoryMoves: boolean = false;
+
+    if (up || queen) {
+      hasMandatoryMoves = this.tryAddMove(current, new Position(-1,1), step, cells, result) || hasMandatoryMoves;
+      hasMandatoryMoves = this.tryAddMove(current, new Position(1,1), step, cells, result) || hasMandatoryMoves;
     }
-    if (down || both) {
-      hasMandatoryMoves = this.tryAddMove(cell, col-1, row-1, board, result)  || hasMandatoryMoves;
-      hasMandatoryMoves = this.tryAddMove(cell, col+1, row-1, board, result) || hasMandatoryMoves;
+    if (down || queen) {
+      hasMandatoryMoves = this.tryAddMove(current,new Position(-1,-1), step, cells, result) || hasMandatoryMoves;
+      hasMandatoryMoves = this.tryAddMove(current, new Position(1,-1), step, cells, result) || hasMandatoryMoves;
     }
+
     if (hasMandatoryMoves) {
-      let mandatoryMoves : Move[] = [];
-      for(let move of result) {
-        if (move.pawnToDeleteCell != null) { //mandatory
-          mandatoryMoves.push(move);
-        }
-      }
-      result = mandatoryMoves;
+      result = result.filter(m => m.isMandatory());
     }
 
     return result;
   }
 
-  tryAddMove(currentCell: Cell, col: number, row: number, board: Cell[][], result: Move[]):boolean {
-    let isMandatory: boolean = false;
-    try {
-      let cell = board[row][col];
-      if (cell.pawn == null) {
-        result.push(new Move(cell, null));
-        console.log("add");
-      }
-      else if (cell.pawn.color != this.color) {
-        let currentCol = currentCell.column + (col - currentCell.column)*2;
-        let currentRow = currentCell.row + (row - currentCell.row)*2;
-        let cell2: Cell = board[currentRow][currentCol];
+  tryAddMove(currentCell: Cell, direction: Position, nbSteps: number, cells: Cells, result: Move[]) : boolean {
+    let currentPawn: Pawn = currentCell.pawn;
+    let isMandatory : boolean = false;
+    let step : number = 1;
+    let isPreviousPawn = 0;
+    let isPawn = 0;
+    let cellToDelete: Cell = null;
 
-        if (cell2.pawn == null) {
-          result.push(new Move(cell2, cell));
-          console.log("add");
-          isMandatory = true;
+    let cell: Cell;
+
+    do {
+      cell = cells.translate(currentCell, direction, step + isPawn);
+      if (cell != null) {
+        if (!cell.hasPawn()) {
+          result.push(new Move(cell, cellToDelete));
+          isMandatory = cellToDelete != null && cellToDelete.hasPawn();
+          if (step != -1) step++;
+          isPreviousPawn = 0;
+        }
+        else if(cell.hasOpponentPawn(currentPawn)) {
+          if (isPreviousPawn == 1) {
+            break;
+          }
+          isPreviousPawn = 1;
+          isPawn = 1;
+          cellToDelete = cell;
+        }
+        else { //Player pawn
+          cell = null;
         }
       }
-    } catch(ex) {
-      //
-    }
+    } while(cell != null && (step <= nbSteps || nbSteps == -1));
+
     return isMandatory;
   }
 

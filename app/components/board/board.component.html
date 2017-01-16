@@ -1,7 +1,7 @@
 
 <table class="centered center-align">
   <tbody>
-  <tr *ngFor="let row of board">
+  <tr *ngFor="let row of board.board">
     <td *ngFor="let cell of row"
         [ngClass]="{
             'grey lighten-2' : cell.color,
@@ -17,6 +17,10 @@
           <img src="{{crownIconPath}}"/>
         </i>
       </a>
+
+      <span *ngIf="cell.pawn == null">
+        {{ cell.row }}:{{cell.column}}
+      </span>
 
 
 

@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {Cell} from "../../model/cell.model";
 import {Pawn} from "../../model/pawn.model";
 import {Move} from "../../model/move.model";
+import {Cells} from "../../model/cells.model";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -15,7 +16,7 @@ export class BoardComponent {
   size: number = 10;
   nbPawnRows: number = 4;
 
-  board: Cell[][] = [];
+  board: Cells;
 
   activeCell: Cell;
   activeMoves: Move[] = [];
@@ -26,31 +27,19 @@ export class BoardComponent {
   }
 
   initialize() {
-    let rowColorStart = true;
-
-    for (let i = 0; i < this.size; i++) {
-      let color = rowColorStart;
-      rowColorStart = !rowColorStart;
-
-      let row: Cell[] = [];
-      for (let j = 0; j < this.size; j++) {
-        row.push(new Cell(i, j, color, null));
-        color = !color;
-      }
-      this.board.push(row);
-    }
+    this.board = new Cells(this.size, this.size);
   }
 
   initPawns() {
     for (let row = 0; row < this.nbPawnRows; row++) {
       for (let col = row % 2 == 0 ? 1 : 0; col < this.size; col += 2) {
-        this.board[row][col].pawn = new Pawn(false);
+        this.board.setPawn(row, col, new Pawn(false));
       }
     }
 
     for (let row = this.size - 1; row > (this.size - 1) - this.nbPawnRows; row--) {
       for (let col = row % 2 == 1 ? 0 : 1; col < this.size; col += 2) {
-        this.board[row][col].pawn = new Pawn(true);
+        this.board.setPawn(row, col, new Pawn(true));
       }
     }
   }
@@ -58,9 +47,6 @@ export class BoardComponent {
   select(cell: Cell) {
     if (cell != null && cell.pawn != null) {
       this.activeMoves = [];
-      let x = cell.column;
-      let y = cell.row;
-
       let moves = cell.pawn.getPossibleMoves(cell, this.board);
       for (let move of moves) {
         this.activeCell = cell;
@@ -80,16 +66,11 @@ export class BoardComponent {
     this.activeCell.pawn = null;
     move.cell.pawn = pawn;
 
-    this.activeMoves = [];
-  }
-
-  findPawn(pawn: Pawn): Cell {
-    try {
-      return this.board.find(row => row.find(c => c.pawn == pawn) != null).find(c => c.pawn == pawn);
-    } catch(ex) {
-
+    if (move.cell.becomesQueen(move.cell.pawn, this.size)) {
+      move.cell.pawn.isQueen = true;
     }
-    return null;
+
+    this.activeMoves = [];
   }
 
   getMoveFromCell(cell: Cell): Move {

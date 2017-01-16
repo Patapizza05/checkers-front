@@ -9,4 +9,8 @@ export class Move {
     this.pawnToDeleteCell = pawnToDeleteCell;
   }
 
+  isMandatory():boolean {
+    return this.pawnToDeleteCell != null;
+  }
+
 }
