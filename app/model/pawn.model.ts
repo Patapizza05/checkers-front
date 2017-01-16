@@ -18,8 +18,8 @@ export class Pawn {
 
     let result: Move[] = [];
 
-    let down: boolean = this.isGoUp && !this.isQueen;
-    let up: boolean = !this.isGoUp && !this.isQueen;
+    let down: boolean = !this.isGoUp && !this.isQueen;
+    let up: boolean = this.isGoUp && !this.isQueen;
     let queen: boolean = this.isQueen;
 
     let step = queen ? -1 : 1;

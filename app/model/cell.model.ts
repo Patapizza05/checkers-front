@@ -15,7 +15,7 @@ export class Cell {
   becomesQueen(pawn: Pawn, size: number): boolean {
     if (pawn == null) return false;
 
-    if (!pawn.color) { //down
+    if (pawn.color) { //down
       if (this.row == size - 1) {
         return true;
       }

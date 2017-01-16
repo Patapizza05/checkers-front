@@ -13,13 +13,13 @@ export class Cells {
 
     let rowColorStart = true;
 
-    for (let i = 0; i < this.nbRows; i++) {
+    for (let rowIndex = 0; rowIndex < this.nbRows; rowIndex++) {
       let color = rowColorStart;
       rowColorStart = !rowColorStart;
 
       let row: Cell[] = [];
-      for (let j = 0; j < this.nbColumns; j++) {
-        row.push(new Cell(i, j, color, null));
+      for (let colIndex = 0; colIndex < this.nbColumns; colIndex++) {
+        row.push(new Cell((this.nbRows-1)-rowIndex, colIndex, color, null));
         color = !color;
       }
       this.board.push(row);
@@ -36,7 +36,7 @@ export class Cells {
 
   get(col:number, row:number):Cell {
     try {
-      return this.board[row][col];
+      return this.board[(this.nbRows-1)-row][col];
     }
     catch(err) {
       //

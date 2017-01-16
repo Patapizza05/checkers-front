@@ -45,6 +45,12 @@ export class BoardComponent {
   }
 
   select(cell: Cell) {
+    if (this.activeCell == cell) {
+      this.activeCell = null;
+      this.activeMoves = [];
+      return;
+    }
+
     if (cell != null && cell.pawn != null) {
       this.activeMoves = [];
       let moves = cell.pawn.getPossibleMoves(cell, this.board);
