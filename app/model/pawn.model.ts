@@ -24,8 +24,6 @@ export class Pawn {
 
     let step = queen ? -1 : 1;
 
-    console.log(current.pawn.isQueen+":"+step);
-
     let hasMandatoryMoves: boolean = false;
 
     if (up || queen) {

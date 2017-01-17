@@ -3,6 +3,7 @@ import {Cell} from "../../model/cell.model";
 import {Pawn} from "../../model/pawn.model";
 import {Move} from "../../model/move.model";
 import {Cells} from "../../model/cells.model";
+import {CheckersService} from "../../services/checkers.service";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -10,6 +11,8 @@ import {Cells} from "../../model/cells.model";
   styleUrls: ['board.component.css']
 })
 export class BoardComponent {
+
+  debug = false;
 
   crownIconPath = 'resources/crown.png';
 
@@ -21,7 +24,9 @@ export class BoardComponent {
   activeCell: Cell;
   activeMoves: Move[] = [];
 
-  constructor() {
+  constructor(
+    private checkersService: CheckersService
+  ) {
     this.initialize();
     this.initPawns();
   }
@@ -45,6 +50,7 @@ export class BoardComponent {
   }
 
   select(cell: Cell) {
+    this.checkersService.getHelloWorld().then(str => console.log(str));
     if (this.activeCell == cell) {
       this.activeCell = null;
       this.activeMoves = [];

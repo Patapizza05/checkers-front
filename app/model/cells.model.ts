@@ -11,7 +11,7 @@ export class Cells {
     this.nbColumns = nbColumns;
     this.nbRows = nbRows;
 
-    let rowColorStart = true;
+    let rowColorStart = false;
 
     for (let rowIndex = 0; rowIndex < this.nbRows; rowIndex++) {
       let color = rowColorStart;
