@@ -1,9 +1,11 @@
-import {Component} from "@angular/core";
+import {Component, Input, EventEmitter, Output, forwardRef, Inject, Host} from "@angular/core";
 import {Move} from "../../model/move.model";
 import {CheckersService} from "../../services/checkers.service";
 import {CheckersGameImpl} from "../../model/checkers-game-impl.model";
 import {Cell} from "../../model/cell.model";
 import {MoveResult} from "../../model/move-result.model";
+import {Model} from "../../model/model.model";
+import {DashboardComponent} from "../dashboard/dashboard.component";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -12,19 +14,19 @@ import {MoveResult} from "../../model/move-result.model";
 })
 export class BoardComponent {
 
-  debug = true;
+  @Input()
+    model: Model;
 
+  dashboard: DashboardComponent; //Parent
 
-  isError = false;
-  isLoading = false;
+  get game() : CheckersGameImpl {
+    return this.model.game;
+  }
+  set game(game: CheckersGameImpl) {
+    this.model.game = game;
+  }
 
   crownIconPath = 'resources/crown.png';
-
-  size: number = 10;
-  nbPawnRows: number = 4;
-
-  /*board: Cells;*/
-  game: CheckersGameImpl;
 
   activeCell: Cell;
   activeMoves: Move[] = [];
@@ -43,29 +45,12 @@ export class BoardComponent {
   }
 
   constructor(
-    private checkersService: CheckersService
+    private checkersService: CheckersService,
+    @Host() @Inject(forwardRef(() => DashboardComponent)) dashboard: DashboardComponent
   ) {
-
-    this.loadGame();
+    this.dashboard = dashboard;
   }
 
-  createGame(): void {
-    this.checkersService.createGame().then(game => {
-      this.game = game;
-    })
-  }
-
-  loadGame():void {
-    this.isError = false;
-    this.isLoading = true;
-    this.checkersService.getGame().then(game => {
-      this.game = game;
-      this.isLoading = false;
-    }).catch(reason => {
-      this.isError = true;
-      this.isLoading = false;
-    });
-  }
 
   select(cell: Cell) {
 

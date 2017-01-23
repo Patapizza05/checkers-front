@@ -10,9 +10,10 @@ import {AppRoutingModule} from "./app-routing.module";
 import {NavBarComponent} from "./components/navbar/navbar.component";
 import {BoardComponent} from "./components/board/board.component";
 import {CheckersService} from "./services/checkers.service";
+import {PlayerInformationComponent} from "./components/player-information/player-information.component";
 
 @NgModule({
-  declarations: [ DashboardComponent, AppComponent, NavBarComponent, BoardComponent ],
+  declarations: [ DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent ],
   imports:      [ BrowserModule, FormsModule, HttpModule, MaterializeModule, AppRoutingModule ],
   providers:    [ CheckersService ],
   bootstrap:    [ AppComponent ]

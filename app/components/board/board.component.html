@@ -1,7 +1,7 @@
 
-<table *ngIf="!isError && game && game.board && game.board.cells && game.board.cells.cells" class="centered center-align">
+<table *ngIf="!model.error && model.game && model.game.board && model.game.board.cells && model.game.board.cells.cells" class="centered center-align">
   <tbody>
-  <tr *ngFor="let row of game.board.cells.cells">
+  <tr *ngFor="let row of model.game.board.cells.cells">
     <td *ngFor="let cell of row"
         [ngClass]="{
             'grey lighten-2' : !cell.isColorLight,
@@ -28,11 +28,11 @@
 
 <div class="flex info">
   <span *ngIf="nextUser">Player turn: {{nextUser}}</span>
-  <a class="waves-effect waves-light btn red" (click)="createGame();">New game</a>
+  <a class="waves-effect waves-light btn red" (click)="dashboard.createGame();">New game</a>
 </div>
 
 <div class="flex error">
-  <div *ngIf="isLoading" class="preloader-wrapper big active">
+  <div *ngIf="model.loading" class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
         <div class="circle"></div>
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <a *ngIf="isError" class="waves-effect waves-light btn red" (click)="loadGame();">Retry</a>
+  <a *ngIf="model.error" class="waves-effect waves-light btn red" (click)="dashboard.loadGame();">Retry</a>
 </div>
 
 
