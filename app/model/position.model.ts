@@ -1,14 +1,17 @@
-export class Position {
+export class PositionFromApi {
   column: number;
   row: number;
 
-  constructor(column: number, row: number) {
-    this.column = column;
+  constructor(row:number, col:number) {
     this.row = row;
+    this.column = col;
   }
 
-  translate(direction:Position, step:number):Position {
-    return new Position(this.column + direction.column*step, this.row + direction.row*step);
+  translate(direction:PositionFromApi, step:number):PositionFromApi {
+    return new PositionFromApi(this.row + direction.row*step, this.column + direction.column*step);
   }
 
+  static fromJson(position: PositionFromApi): PositionFromApi {
+    return new PositionFromApi(position.row, position.column);
+  }
 }
