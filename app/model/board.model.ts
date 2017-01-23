@@ -73,7 +73,6 @@ export class Board {
 
     do {
       cell = this.cells.translate(originCell, direction, step + isPawn);
-      console.log(cell);
       if (cell != null) {
         if (!cell.hasPawn()) {
           result.push(new Move(cell, cellPawnToDelete));
