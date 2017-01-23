@@ -3,7 +3,7 @@ import {Cells} from "./cells.model";
 import {Pawn} from "./pawn.model";
 import {Cell} from "./cell.model";
 import {Move} from "./move.model";
-import {PositionFromApi} from "./position.model";
+import {Position} from "./position.model";
 
 
 
@@ -55,14 +55,14 @@ export class Board {
 
   tryAddMultipleMoves(originCell: Cell, nbSteps: number, result: Move[], row: number): boolean {
     let hasMandatoryMoves = false;
-    hasMandatoryMoves = this.tryAddMove(originCell, new PositionFromApi(row, -1), nbSteps, result) || hasMandatoryMoves;
-    hasMandatoryMoves = this.tryAddMove(originCell, new PositionFromApi(row, 1), nbSteps, result) || hasMandatoryMoves;
+    hasMandatoryMoves = this.tryAddMove(originCell, new Position(row, -1), nbSteps, result) || hasMandatoryMoves;
+    hasMandatoryMoves = this.tryAddMove(originCell, new Position(row, 1), nbSteps, result) || hasMandatoryMoves;
 
     return hasMandatoryMoves;
 
   }
 
-  tryAddMove(originCell: Cell, direction: PositionFromApi, nbSteps: number, result: Move[]): boolean {
+  tryAddMove(originCell: Cell, direction: Position, nbSteps: number, result: Move[]): boolean {
     let pawn = originCell.pawn;
     let isMandatory = false;
     let step = 1;

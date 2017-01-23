@@ -1,4 +1,4 @@
-export class PositionFromApi {
+export class Position {
   column: number;
   row: number;
 
@@ -7,11 +7,11 @@ export class PositionFromApi {
     this.column = col;
   }
 
-  translate(direction:PositionFromApi, step:number):PositionFromApi {
-    return new PositionFromApi(this.row + direction.row*step, this.column + direction.column*step);
+  translate(direction:Position, step:number):Position {
+    return new Position(this.row + direction.row*step, this.column + direction.column*step);
   }
 
-  static fromJson(position: PositionFromApi): PositionFromApi {
-    return new PositionFromApi(position.row, position.column);
+  static fromJson(position: Position): Position {
+    return new Position(position.row, position.column);
   }
 }

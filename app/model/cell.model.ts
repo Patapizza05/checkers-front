@@ -1,4 +1,4 @@
-import {PositionFromApi} from "./position.model";
+import {Position} from "./position.model";
 import {Pawn} from "./pawn.model";
 import {User} from "./user.model";
 
@@ -6,7 +6,7 @@ import {User} from "./user.model";
 export class Cell {
   color: string;
   pawn: Pawn;
-  position: PositionFromApi;
+  position: Position;
 
   get isColorLight(): boolean {
     return this.color == 'LIGHT';
@@ -53,7 +53,7 @@ export class Cell {
     if (cell.pawn != null) {
       self.pawn = Pawn.fromJson(cell.pawn);
     }
-    self.position = PositionFromApi.fromJson(cell.position);
+    self.position = Position.fromJson(cell.position);
     return self;
   }
 }
