@@ -17,6 +17,8 @@ td {
   width:50px;
   height:50px;
   padding:0;
+  cursor:default;
+  user-select:none;
 }
 
 img {
@@ -34,4 +36,8 @@ img {
   background-color:rgba(3,155,229,0.2) !important;
   border:1px solid rgb(3, 155, 229); /*#039be5*/
   cursor:pointer;
+}
+
+.error {
+  margin:20%;
 }

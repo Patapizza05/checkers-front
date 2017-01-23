@@ -13,6 +13,10 @@ export class BoardComponent {
 
   debug = true;
 
+
+  isError = false;
+  isLoading = false;
+
   crownIconPath = 'resources/crown.png';
 
   size: number = 10;
@@ -28,31 +32,20 @@ export class BoardComponent {
     private checkersService: CheckersService
   ) {
 
-    this.checkersService.createCheckersGame().then(game => {
+    this.loadGame();
+  }
+
+  loadGame():void {
+    this.isError = false;
+    this.isLoading = true;
+    this.checkersService.getGame().then(game => {
       this.game = game;
+      this.isLoading = false;
+    }).catch(reason => {
+      this.isError = true;
+      this.isLoading = false;
     });
-
-/*    this.initialize();
-    this.initPawns();*/
   }
-
-/*  initialize() {
-    this.board = new Cells(this.size, this.size);
-  }
-
-  initPawns() {
-    for (let row = 0; row < this.nbPawnRows; row++) {
-      for (let col = row % 2 == 0 ? 1 : 0; col < this.size; col += 2) {
-        this.board.setPawn(row, col, new Pawn(false));
-      }
-    }
-
-    for (let row = this.size - 1; row > (this.size - 1) - this.nbPawnRows; row--) {
-      for (let col = row % 2 == 1 ? 0 : 1; col < this.size; col += 2) {
-        this.board.setPawn(row, col, new Pawn(true));
-      }
-    }
-  }*/
 
   select(cell: Cell) {
 
@@ -74,6 +67,11 @@ export class BoardComponent {
 
   move(move: Move) {
     if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.cell == null) return false;
+
+    this.checkersService.play(this.activeCell.position, move.cell.position)
+      .then(moveResult => {
+        console.log(moveResult);
+      });
 
     if (move.pawnToDeleteCell != null && move.pawnToDeleteCell.pawn != null) {
       move.pawnToDeleteCell.pawn = null;
