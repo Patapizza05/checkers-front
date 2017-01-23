@@ -1,9 +1,8 @@
 import {Component} from "@angular/core";
-import {Cell} from "../../model/cell.model";
-import {Pawn} from "../../model/pawn.model";
 import {Move} from "../../model/move.model";
-import {Cells} from "../../model/cells.model";
 import {CheckersService} from "../../services/checkers.service";
+import {CheckersGameImpl} from "../../model/checkers-game-impl.model";
+import {Cell} from "../../model/cell.model";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -12,14 +11,15 @@ import {CheckersService} from "../../services/checkers.service";
 })
 export class BoardComponent {
 
-  debug = false;
+  debug = true;
 
   crownIconPath = 'resources/crown.png';
 
   size: number = 10;
   nbPawnRows: number = 4;
 
-  board: Cells;
+  /*board: Cells;*/
+  game: CheckersGameImpl;
 
   activeCell: Cell;
   activeMoves: Move[] = [];
@@ -27,11 +27,16 @@ export class BoardComponent {
   constructor(
     private checkersService: CheckersService
   ) {
-    this.initialize();
-    this.initPawns();
+
+    this.checkersService.createCheckersGame().then(game => {
+      this.game = game;
+    });
+
+/*    this.initialize();
+    this.initPawns();*/
   }
 
-  initialize() {
+/*  initialize() {
     this.board = new Cells(this.size, this.size);
   }
 
@@ -47,10 +52,10 @@ export class BoardComponent {
         this.board.setPawn(row, col, new Pawn(true));
       }
     }
-  }
+  }*/
 
   select(cell: Cell) {
-    this.checkersService.getHelloWorld().then(str => console.log(str));
+
     if (this.activeCell == cell) {
       this.activeCell = null;
       this.activeMoves = [];
@@ -59,7 +64,7 @@ export class BoardComponent {
 
     if (cell != null && cell.pawn != null) {
       this.activeMoves = [];
-      let moves = cell.pawn.getPossibleMoves(cell, this.board);
+      let moves = this.game.board.getPossibleMoves(cell);
       for (let move of moves) {
         this.activeCell = cell;
         this.activeMoves.push(move);
@@ -78,7 +83,7 @@ export class BoardComponent {
     this.activeCell.pawn = null;
     move.cell.pawn = pawn;
 
-    if (move.cell.becomesQueen(move.cell.pawn, this.size)) {
+    if (move.cell.becomesQueen(move.cell.pawn, this.game.board.getUser(move.cell.pawn))) {
       move.cell.pawn.isQueen = true;
     }
 
@@ -95,7 +100,9 @@ export class BoardComponent {
   }
 
   isActiveColor1(): boolean {
-    return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.color;
+    return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.isColorWhite;
   }
+
+
 
 }

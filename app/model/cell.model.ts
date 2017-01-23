@@ -1,47 +1,59 @@
-import {ColorCell} from "./color-cell.model";
-import {Pawn} from "./pawn.model";
-import {Position} from "./position.model"
+import {PositionFromApi} from "./position.model";
+import {PawnFromApi} from "./pawn.model";
+import {User} from "./user.model";
+
+
 export class Cell {
-  position: Position;
-  color: boolean;
-  pawn: Pawn;
+  color: string;
+  pawn: PawnFromApi;
+  position: PositionFromApi;
 
-  constructor(row: number, col: number, color: boolean, pawn: Pawn) {
-    this.position = new Position(col, row);
-    this.color = color;
-    this.pawn = pawn;
+  get isColorLight(): boolean {
+    return this.color == 'LIGHT';
   }
 
-  becomesQueen(pawn: Pawn, size: number): boolean {
-    if (pawn == null) return false;
-
-    if (pawn.color) { //down
-      if (this.row == size - 1) {
-        return true;
-      }
-    }
-    else {
-      if (this.row == 0) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  hasPawn():boolean {
-    return this.pawn != null;
-  }
-
-  hasOpponentPawn(pawn: Pawn):boolean {
-    return this.hasPawn() && pawn.color != this.pawn.color;
-  }
-
-  get row():number {
+  get row(): number {
     return this.position.row;
   }
 
-  get column():number {
+  get column(): number {
     return this.position.column;
   }
 
+  becomesQueen(pawn: PawnFromApi, user: User): boolean {
+    if (pawn == null || user == null || pawn.color != user.colorPawn) return false;
+
+    return this.row == user.queenRow;
+  }
+
+  hasPawn(): boolean {
+    return this.pawn != null;
+  }
+
+  hasOpponentPawn(pawn: PawnFromApi):boolean {
+    return this.hasPawn() && pawn.color != this.pawn.color;
+  }
+
+
+  static fromJsonArray(cells: Cell[][]): Cell[][] {
+    let array : Cell[][] = [];
+    for(let row of cells) {
+      let currentRow: Cell[] = [];
+      for(let cell of row) {
+        currentRow.push(Cell.fromJson(cell));
+      }
+      array.push(currentRow);
+    }
+    return array;
+  }
+
+  private static fromJson(cell: Cell): Cell {
+    let self = new Cell();
+    self.color = cell.color;
+    if (cell.pawn != null) {
+      self.pawn = PawnFromApi.fromJson(cell.pawn);
+    }
+    self.position = PositionFromApi.fromJson(cell.position);
+    return self;
+  }
 }

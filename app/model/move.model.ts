@@ -1,5 +1,6 @@
 import {Pawn} from "./pawn.model";
 import {Cell} from "./cell.model";
+import {Cell} from "./cell.model";
 export class Move {
   cell: Cell;
   pawnToDeleteCell: Cell;
@@ -9,7 +10,7 @@ export class Move {
     this.pawnToDeleteCell = pawnToDeleteCell;
   }
 
-  isMandatory():boolean {
+  get isMandatory():boolean {
     return this.pawnToDeleteCell != null;
   }
 

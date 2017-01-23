@@ -1,46 +1,36 @@
 import {Cell} from "./cell.model";
-import {Position} from "./position.model"
-import {Pawn} from "./pawn.model";
+import {PositionFromApi} from "./position.model";
+import {PawnFromApi} from "./pawn.model";
 export class Cells {
-  board: Cell[][] = [];
+  cells: Cell[][];
 
-  private nbColumns : number;
-  private nbRows : number;
+  get nbRows(): number {
+    return this.cells.length;
+  }
 
-  constructor(nbRows: number, nbColumns: number) {
-    this.nbColumns = nbColumns;
-    this.nbRows = nbRows;
-
-    let rowColorStart = false;
-
-    for (let rowIndex = 0; rowIndex < this.nbRows; rowIndex++) {
-      let color = rowColorStart;
-      rowColorStart = !rowColorStart;
-
-      let row: Cell[] = [];
-      for (let colIndex = 0; colIndex < this.nbColumns; colIndex++) {
-        row.push(new Cell((this.nbRows-1)-rowIndex, colIndex, color, null));
-        color = !color;
-      }
-      this.board.push(row);
-    }
+  get nbColumns(): number {
+    return this.cells[0].length;
   }
 
   getColumn(col:number):Cell[] {
-    return this.board[col];
+    return this.cells[col];
   }
 
-  getFromPosition(position: Position):Cell {
+  getFromPosition(position: PositionFromApi):Cell {
     return this.get(position.column, position.row);
   }
 
   get(col:number, row:number):Cell {
     try {
-      return this.board[(this.nbRows-1)-row][col];
+      return this.cells[(this.nbRows-1)-row][col];
     }
     catch(err) {
       //
     }
+  }
+
+  set(col:number, row:number, pawn: PawnFromApi) {
+    this.get(col, row).pawn = pawn;
   }
 
   getNbColumns():number {
@@ -51,20 +41,26 @@ export class Cells {
     return this.nbRows;
   }
 
-  translate(cell: Cell, direction: Position, step:number):Cell {
+  translate(cell: Cell, direction: PositionFromApi, step:number):Cell {
     return this.getFromPosition(cell.position.translate(direction, step));
   }
 
-  findPawn(pawn: Pawn): Cell {
+  findPawn(pawn: PawnFromApi): Cell {
     try {
-      return this.board.find(row => row.find(c => c.pawn == pawn) != null).find(c => c.pawn == pawn);
+      return this.cells.find(row => row.find(c => c.pawn == pawn) != null).find(c => c.pawn == pawn);
     } catch(ex) {
       //
     }
     return null;
   }
 
-  setPawn(row: number, col: number, pawn: Pawn) {
-    this.board[row][col].pawn = pawn;
+  setPawn(row: number, col: number, pawn: PawnFromApi) {
+    this.set(col, row, pawn);
+  }
+
+  static fromJson(cells: Cells): Cells {
+    let self = new Cells();
+    self.cells = Cell.fromJsonArray(cells.cells);
+    return self;
   }
 }
