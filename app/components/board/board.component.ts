@@ -3,6 +3,7 @@ import {Move} from "../../model/move.model";
 import {CheckersService} from "../../services/checkers.service";
 import {CheckersGameImpl} from "../../model/checkers-game-impl.model";
 import {Cell} from "../../model/cell.model";
+import {MoveResult} from "../../model/move-result.model";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -70,21 +71,10 @@ export class BoardComponent {
 
     this.checkersService.play(this.activeCell.position, move.cell.position)
       .then(moveResult => {
-        console.log(moveResult);
+        this.apply(moveResult);
       });
 
-    if (move.pawnToDeleteCell != null && move.pawnToDeleteCell.pawn != null) {
-      move.pawnToDeleteCell.pawn = null;
-    }
-
-    let pawn = this.activeCell.pawn;
-    this.activeCell.pawn = null;
-    move.cell.pawn = pawn;
-
-    if (move.cell.becomesQueen(move.cell.pawn, this.game.board.getUser(move.cell.pawn))) {
-      move.cell.pawn.isQueen = true;
-    }
-
+    this.activeCell = null;
     this.activeMoves = [];
   }
 
@@ -101,6 +91,21 @@ export class BoardComponent {
     return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.isColorWhite;
   }
 
+
+  apply(moveResult: MoveResult) {
+    if (moveResult.kill != null) {
+      this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
+    }
+
+    let origin = this.game.board.cells.getFromPosition(moveResult.origin);
+    let pawn = origin.pawn;
+    origin.pawn = null;
+    this.game.board.cells.getFromPosition(moveResult.destination).pawn = pawn;
+
+    if (moveResult.becomesQueen) {
+      pawn.isQueen = true;
+    }
+  }
 
 
 }
