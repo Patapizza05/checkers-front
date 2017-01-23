@@ -1,6 +1,6 @@
 import {Cell} from "./cell.model";
 import {PositionFromApi} from "./position.model";
-import {PawnFromApi} from "./pawn.model";
+import {Pawn} from "./pawn.model";
 export class Cells {
   cells: Cell[][];
 
@@ -29,7 +29,7 @@ export class Cells {
     }
   }
 
-  set(col:number, row:number, pawn: PawnFromApi) {
+  set(col:number, row:number, pawn: Pawn) {
     this.get(col, row).pawn = pawn;
   }
 
@@ -45,7 +45,7 @@ export class Cells {
     return this.getFromPosition(cell.position.translate(direction, step));
   }
 
-  findPawn(pawn: PawnFromApi): Cell {
+  findPawn(pawn: Pawn): Cell {
     try {
       return this.cells.find(row => row.find(c => c.pawn == pawn) != null).find(c => c.pawn == pawn);
     } catch(ex) {
@@ -54,7 +54,7 @@ export class Cells {
     return null;
   }
 
-  setPawn(row: number, col: number, pawn: PawnFromApi) {
+  setPawn(row: number, col: number, pawn: Pawn) {
     this.set(col, row, pawn);
   }
 

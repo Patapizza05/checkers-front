@@ -1,11 +1,11 @@
 import {PositionFromApi} from "./position.model";
-import {PawnFromApi} from "./pawn.model";
+import {Pawn} from "./pawn.model";
 import {User} from "./user.model";
 
 
 export class Cell {
   color: string;
-  pawn: PawnFromApi;
+  pawn: Pawn;
   position: PositionFromApi;
 
   get isColorLight(): boolean {
@@ -20,7 +20,7 @@ export class Cell {
     return this.position.column;
   }
 
-  becomesQueen(pawn: PawnFromApi, user: User): boolean {
+  becomesQueen(pawn: Pawn, user: User): boolean {
     if (pawn == null || user == null || pawn.color != user.colorPawn) return false;
 
     return this.row == user.queenRow;
@@ -30,7 +30,7 @@ export class Cell {
     return this.pawn != null;
   }
 
-  hasOpponentPawn(pawn: PawnFromApi):boolean {
+  hasOpponentPawn(pawn: Pawn):boolean {
     return this.hasPawn() && pawn.color != this.pawn.color;
   }
 
@@ -51,7 +51,7 @@ export class Cell {
     let self = new Cell();
     self.color = cell.color;
     if (cell.pawn != null) {
-      self.pawn = PawnFromApi.fromJson(cell.pawn);
+      self.pawn = Pawn.fromJson(cell.pawn);
     }
     self.position = PositionFromApi.fromJson(cell.position);
     return self;

@@ -1,6 +1,6 @@
 import {User} from "./user.model";
 import {Cells} from "./cells.model";
-import {PawnFromApi} from "./pawn.model";
+import {Pawn} from "./pawn.model";
 import {Cell} from "./cell.model";
 import {Move} from "./move.model";
 import {PositionFromApi} from "./position.model";
@@ -13,7 +13,7 @@ export class Board {
   userWhite: User;
 
 
-  getUser(pawn: PawnFromApi): User {
+  getUser(pawn: Pawn): User {
     if (pawn.color == this.userBlack.colorPawn) {
       return this.userBlack;
     }

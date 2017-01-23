@@ -1,4 +1,4 @@
-export class PawnFromApi {
+export class Pawn {
   color: string;
   direction: string;
 
@@ -25,8 +25,8 @@ export class PawnFromApi {
   }
 
 
-  static fromJson(pawn: PawnFromApi): PawnFromApi {
-    let self = new PawnFromApi();
+  static fromJson(pawn: Pawn): Pawn {
+    let self = new Pawn();
     self.color = pawn.color;
     self.direction = pawn.direction;
     return self;

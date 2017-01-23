@@ -1,5 +1,3 @@
-import {Pawn} from "./pawn.model";
-import {Cell} from "./cell.model";
 import {Cell} from "./cell.model";
 export class Move {
   cell: Cell;
