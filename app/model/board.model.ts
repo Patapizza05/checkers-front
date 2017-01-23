@@ -11,6 +11,7 @@ export class Board {
   cells: Cells;
   userBlack: User;
   userWhite: User;
+  nextUser: string;
 
 
   getUser(pawn: Pawn): User {

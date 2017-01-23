@@ -29,11 +29,30 @@ export class BoardComponent {
   activeCell: Cell;
   activeMoves: Move[] = [];
 
+  get nextUser(): string {
+    try {
+      return this.game.board.nextUser;
+
+    }catch(err) {
+      return null;
+    }
+  }
+
+  set nextUser(nextUser: string) {
+    this.game.board.nextUser = nextUser;
+  }
+
   constructor(
     private checkersService: CheckersService
   ) {
 
     this.loadGame();
+  }
+
+  createGame(): void {
+    this.checkersService.createGame().then(game => {
+      this.game = game;
+    })
   }
 
   loadGame():void {
@@ -74,8 +93,7 @@ export class BoardComponent {
         this.apply(moveResult);
       });
 
-    this.activeCell = null;
-    this.activeMoves = [];
+
   }
 
   getMoveFromCell(cell: Cell): Move {
@@ -93,18 +111,29 @@ export class BoardComponent {
 
 
   apply(moveResult: MoveResult) {
-    if (moveResult.kill != null) {
-      this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
+    if (moveResult != null) {
+      if (moveResult.kill != null) {
+        this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
+      }
+
+      let origin = this.game.board.cells.getFromPosition(moveResult.origin);
+      let pawn = origin.pawn;
+      origin.pawn = null;
+      this.game.board.cells.getFromPosition(moveResult.destination).pawn = pawn;
+
+      if (moveResult.becomesQueen) {
+        pawn.isQueen = true;
+      }
+
+      this.nextUser = moveResult.nextUser;
+    }
+    else {
+      //on failure
     }
 
-    let origin = this.game.board.cells.getFromPosition(moveResult.origin);
-    let pawn = origin.pawn;
-    origin.pawn = null;
-    this.game.board.cells.getFromPosition(moveResult.destination).pawn = pawn;
+    this.activeCell = null;
+    this.activeMoves = [];
 
-    if (moveResult.becomesQueen) {
-      pawn.isQueen = true;
-    }
   }
 
 

@@ -5,7 +5,7 @@ export class MoveResult {
   destination:Position;
   kill: Position;
   becomesQueen: boolean;
-  nextUser: boolean;
+  nextUser: string;
 
   public static fromJson(moveResult : MoveResult) : MoveResult {
     return moveResult;
