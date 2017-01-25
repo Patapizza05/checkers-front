@@ -12,7 +12,6 @@ export class DashboardComponent {
 
   model: Model = new Model();
 
-
   get game() : CheckersGameImpl {
     return this.model.game;
   }

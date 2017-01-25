@@ -98,7 +98,15 @@ export class BoardComponent {
   apply(moveResult: MoveResult) {
     if (moveResult != null) {
       if (moveResult.kill != null) {
+        let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
         this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
+        if (killPawn.isColorWhite) {
+          this.model.game.board.userWhite.nbPawns--;
+        }
+        else {
+          this.model.game.board.userBlack.nbPawns--;
+        }
+
       }
 
       let origin = this.game.board.cells.getFromPosition(moveResult.origin);

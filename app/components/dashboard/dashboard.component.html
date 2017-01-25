@@ -1,6 +1,6 @@
 <div class="row">
-  <my-player-information class="col s3"></my-player-information>
+  <my-player-information *ngIf="model.game" [user]="model.game.board.userWhite" class="col s3"></my-player-information>
   <my-board [model]="model" class="col s6"></my-board>
-  <my-player-information class="col s3"></my-player-information>
+  <my-player-information *ngIf="model.game" [user]="model.game.board.userBlack" class="col s3"></my-player-information>
 </div>
 

@@ -9,6 +9,7 @@ export class User {
     self.colorPawn = user.colorPawn;
     self.pawnDirection = user.pawnDirection;
     self.queenRow = user.queenRow;
+    self.nbPawns = user.nbPawns;
     return self;
   }
 }
