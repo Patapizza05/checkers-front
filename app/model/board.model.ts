@@ -102,6 +102,7 @@ export class Board {
     self.cells = Cells.fromJson(board.cells);
     self.userBlack = User.fromJson(board.userBlack);
     self.userWhite = User.fromJson(board.userWhite);
+    self.nextUser = board.nextUser;
     return self;
   }
 

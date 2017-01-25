@@ -60,7 +60,12 @@ export class BoardComponent {
       return;
     }
 
-    if (cell != null && cell.pawn != null) {
+
+
+    console.log(this.game.board.nextUser);
+
+    if (cell != null && cell.pawn != null && cell.pawn.color == this.game.board.nextUser) {
+
       this.activeMoves = [];
       let moves = this.game.board.getPossibleMoves(cell);
       for (let move of moves) {
@@ -118,7 +123,7 @@ export class BoardComponent {
         pawn.isQueen = true;
       }
 
-      this.nextUser = moveResult.nextUser;
+      this.model.game.board.nextUser = moveResult.nextUser;
     }
     else {
       //on failure

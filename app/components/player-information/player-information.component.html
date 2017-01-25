@@ -2,6 +2,7 @@
   <div class="card-content white-text">
     <span class="card-title">User {{user.colorPawn}}</span>
     <p>Pawns: {{user.nbPawns}}</p>
+    <p *ngIf="user.colorPawn == model.game.board.nextUser">Your turn !</p>
   </div>
 <!--  <div class="card-action">
     <a href="#">This is a link</a>

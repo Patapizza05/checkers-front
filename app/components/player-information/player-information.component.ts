@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {User} from "../../model/user.model";
+import {Model} from "../../model/model.model";
 @Component({
   moduleId: module.id,
   selector: 'my-player-information',
@@ -8,6 +9,9 @@ import {User} from "../../model/user.model";
 export class PlayerInformationComponent {
   @Input()
   user: User;
+
+  @Input()
+  model: Model;
 
 
 }
