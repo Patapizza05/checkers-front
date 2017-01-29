@@ -1,4 +1,5 @@
 import {CheckersGameImpl} from "./checkers-game-impl.model";
+import {MoveResult} from "./move-result.model";
 export class Model {
   _error: boolean = false;
   _loading: boolean = false;
@@ -28,5 +29,30 @@ export class Model {
   clear(): void {
     this._error = false;
     this._loading = false;
+  }
+
+  apply(moveResult: MoveResult) {
+      if (moveResult != null) {
+        if (moveResult.kill != null) {
+          let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
+          this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
+          this.game.board.userWhite.nbPawns = moveResult.nbPawnsUserWhite;
+          this.game.board.userBlack.nbPawns = moveResult.nbPawnsUserBlack;
+        }
+
+        let origin = this.game.board.cells.getFromPosition(moveResult.origin);
+        let pawn = origin.pawn;
+        origin.pawn = null;
+        this.game.board.cells.getFromPosition(moveResult.destination).pawn = pawn;
+
+        if (moveResult.becomesQueen) {
+          pawn.isQueen = true;
+        }
+
+        this.game.board.nextUser = moveResult.nextUser;
+      }
+      else {
+        //on failure
+      }
   }
 }

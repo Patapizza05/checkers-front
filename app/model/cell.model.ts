@@ -47,7 +47,7 @@ export class Cell {
     return array;
   }
 
-  private static fromJson(cell: Cell): Cell {
+  static fromJson(cell: Cell): Cell {
     let self = new Cell();
     self.color = cell.color;
     if (cell.pawn != null) {
@@ -55,5 +55,9 @@ export class Cell {
     }
     self.position = Position.fromJson(cell.position);
     return self;
+  }
+
+  equals(cell: Cell) {
+    return this.position.equals(cell.position);
   }
 }

@@ -5,6 +5,7 @@ import {HttpService} from "./http-utils";
 import {CheckersGameImpl} from "../model/checkers-game-impl.model";
 import {MoveResult} from "../model/move-result.model";
 import {Position} from "../model/position.model";
+import {Move} from "../model/move.model";
 
 @Injectable()
 export class CheckersService extends HttpService {
@@ -35,6 +36,14 @@ export class CheckersService extends HttpService {
     console.log(url);
     return this.post(url, {'origin':origin, 'destination':destination })
       .then(response => MoveResult.fromJson(response.json() as MoveResult))
+      .catch(this.handleError.bind(this, url));
+  }
+
+  getPossibleMoves(position: Position) : Promise<Move[]> {
+    const url = `${this.url}/moves`;
+    console.log(url);
+    return this.post(url, position)
+      .then(response => Move.fromJsonArray(response.json() as Move[]))
       .catch(this.handleError.bind(this, url));
   }
 

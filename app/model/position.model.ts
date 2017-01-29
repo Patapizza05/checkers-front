@@ -14,4 +14,8 @@ export class Position {
   static fromJson(position: Position): Position {
     return new Position(position.row, position.column);
   }
+
+  equals(position: Position) : boolean {
+    return this.row == position.row && this.column == position.column;
+  }
 }

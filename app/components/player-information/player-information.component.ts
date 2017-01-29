@@ -13,5 +13,17 @@ export class PlayerInformationComponent {
   @Input()
   model: Model;
 
+  isTurn(): boolean {
+    return this.user.colorPawn == this.model.game.board.nextUser;
+  }
+
+
+  isPlayerBlack():boolean {
+    return this.user.colorPawn == 'BLACK'
+  }
+
+  isPlayerWhite():boolean {
+    return this.user.colorPawn == 'WHITE'
+  }
 
 }

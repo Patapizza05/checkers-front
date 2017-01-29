@@ -1,8 +1,8 @@
-<div class="card" [ngClass]="{ 'blue': user.colorPawn == 'BLACK', 'red': user.colorPawn == 'WHITE' }">
+<div class="card" [ngClass]="{ 'grey': !isTurn(), 'blue': isTurn() && user.colorPawn == 'BLACK', 'red': isTurn() && user.colorPawn == 'WHITE' }">
   <div class="card-content white-text">
-    <span class="card-title">User {{user.colorPawn}}</span>
+    <span class="card-title">Player {{user.colorPawn}}</span>
     <p>Pawns: {{user.nbPawns}}</p>
-    <p *ngIf="user.colorPawn == model.game.board.nextUser">Your turn !</p>
+    <p *ngIf="isTurn()">Your turn !</p>
   </div>
 <!--  <div class="card-action">
     <a href="#">This is a link</a>

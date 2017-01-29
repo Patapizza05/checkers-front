@@ -6,6 +6,8 @@ export class MoveResult {
   kill: Position;
   becomesQueen: boolean;
   nextUser: string;
+  nbPawnsUserWhite: number;
+  nbPawnsUserBlack: number;
 
   public static fromJson(moveResult : MoveResult) : MoveResult {
     return moveResult;

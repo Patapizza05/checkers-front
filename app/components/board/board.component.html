@@ -10,12 +10,12 @@
              'possible-red': isActive(cell) && !isActiveColor1()
             }" (click)="move(getMoveFromCell(cell));">
 
-      <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light" [ngClass]="{red: cell.pawn.isColorWhite, blue:!cell.pawn.isColorWhite}" (click)="select(cell);">
+      <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light tooltipped" [ngClass]="{red: cell.pawn.isColorWhite, blue:!cell.pawn.isColorWhite}" (click)="select(cell);">
+<!--      materialize="tooltip" data-position="bottom" data-delay="500" data-tooltip="This is not your turn"-->
         <i *ngIf="cell.pawn.isQueen">
           <img src="{{crownIconPath}}"/>
         </i>
       </a>
-
       <span *ngIf="debug && cell.pawn == null">
         {{ cell.row }}:{{cell.column}}
       </span>

@@ -17,6 +17,8 @@ export class BoardComponent {
   @Input()
     model: Model;
 
+  private localGetPossibleMoves = false;
+
   dashboard: DashboardComponent; //Parent
 
   get game() : CheckersGameImpl {
@@ -60,25 +62,42 @@ export class BoardComponent {
       return;
     }
 
-
-
-    console.log(this.game.board.nextUser);
-
     if (cell != null && cell.pawn != null && cell.pawn.color == this.game.board.nextUser) {
 
       this.activeMoves = [];
-      let moves = this.game.board.getPossibleMoves(cell);
-      for (let move of moves) {
-        this.activeCell = cell;
-        this.activeMoves.push(move);
+
+
+
+      let moves: Move[] = [];
+      if (this.localGetPossibleMoves) {
+        moves = this.game.board.getPossibleMoves(cell);
       }
+      else {
+        this.checkersService.getPossibleMoves(cell.position)
+          .then(response => {
+            moves = response;
+            for (let move of moves) {
+              this.activeCell = cell;
+              this.activeMoves.push(move);
+            }
+          })
+          .catch(err => {
+            moves = this.game.board.getPossibleMoves(cell);
+            for (let move of moves) {
+              this.activeCell = cell;
+              this.activeMoves.push(move);
+            }
+        })
+      }
+
+
     }
   }
 
   move(move: Move) {
-    if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.cell == null) return false;
+    if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null) return false;
 
-    this.checkersService.play(this.activeCell.position, move.cell.position)
+    this.checkersService.play(this.activeCell.position, move.destination.position)
       .then(moveResult => {
         this.apply(moveResult);
       });
@@ -87,11 +106,11 @@ export class BoardComponent {
   }
 
   getMoveFromCell(cell: Cell): Move {
-    return this.activeMoves.find(m => m.cell == cell);
+    return this.activeMoves.find(m => m.destination.equals(cell));
   }
 
   isActive(cell: Cell) {
-    return this.activeMoves.find(m => m.cell == cell) != null;
+    return this.activeMoves.find(m => m.destination.equals(cell)) != null;
 
   }
 
@@ -101,37 +120,9 @@ export class BoardComponent {
 
 
   apply(moveResult: MoveResult) {
-    if (moveResult != null) {
-      if (moveResult.kill != null) {
-        let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
-        this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
-        if (killPawn.isColorWhite) {
-          this.model.game.board.userWhite.nbPawns--;
-        }
-        else {
-          this.model.game.board.userBlack.nbPawns--;
-        }
-
-      }
-
-      let origin = this.game.board.cells.getFromPosition(moveResult.origin);
-      let pawn = origin.pawn;
-      origin.pawn = null;
-      this.game.board.cells.getFromPosition(moveResult.destination).pawn = pawn;
-
-      if (moveResult.becomesQueen) {
-        pawn.isQueen = true;
-      }
-
-      this.model.game.board.nextUser = moveResult.nextUser;
-    }
-    else {
-      //on failure
-    }
-
+    this.model.apply(moveResult);
     this.activeCell = null;
     this.activeMoves = [];
-
   }
 
 
