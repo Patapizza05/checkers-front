@@ -1,11 +1,24 @@
-<div class="card" [ngClass]="{ 'grey': !isTurn(), 'blue': isTurn() && user.colorPawn == 'BLACK', 'red': isTurn() && user.colorPawn == 'WHITE' }">
-  <div class="card-content white-text">
-    <span class="card-title">Player {{user.colorPawn}}</span>
-    <p>Pawns: {{user.nbPawns}}</p>
-    <p *ngIf="isTurn()">Your turn !</p>
+<div class="card">
+  <div class="card-content" [ngClass]="{
+  'white-text': isTurn(), 'grey-text text-darken-4' : !isTurn(),
+  'white': !isTurn(), 'blue': isTurn() && user.colorPawn == 'BLACK', 'red': isTurn() && user.colorPawn == 'WHITE' }">
+
+    <div *ngIf="!isEdit" class="flex-left">
+      <i class="small material-icons">person</i>
+      <span style="margin-left:10px" class="card-title">{{user.name}}</span>
+    </div>
+
+    <div *ngIf="isEdit" class="flex-left">
+      <i class="small material-icons">person</i>
+      <input type="text" [(ngModel)]="user.name"/>
+      <button type="button" (click)="confirm();">Ok</button>
+    </div>
+    <!--    <p>Pawns: {{user.nbPawns}}</p>
+        <p *ngIf="isTurn()">Your turn !</p>-->
   </div>
-<!--  <div class="card-action">
-    <a href="#">This is a link</a>
-    <a href="#">This is a link</a>
-  </div>-->
+  <div class="card-action">
+    <span [ngClass]="{'red':user.colorPawn == 'WHITE', 'blue': user.colorPawn == 'BLACK'}" class="badge new"
+          data-badge-caption="pawns">{{user.nbPawns}}</span>
+    <a (click)="edit();">Edit</a>
+  </div>
 </div>

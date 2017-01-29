@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, EventEmitter} from "@angular/core";
 import {User} from "../../model/user.model";
 import {Model} from "../../model/model.model";
 @Component({
@@ -13,6 +13,8 @@ export class PlayerInformationComponent {
   @Input()
   model: Model;
 
+  isEdit: boolean = true;
+
   isTurn(): boolean {
     return this.user.colorPawn == this.model.game.board.nextUser;
   }
@@ -26,4 +28,12 @@ export class PlayerInformationComponent {
     return this.user.colorPawn == 'WHITE'
   }
 
+  edit() {
+    this.isEdit = true;
+    return false; //link
+  }
+
+  confirm() {
+    this.isEdit = false;
+  }
 }

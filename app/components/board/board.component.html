@@ -1,5 +1,5 @@
 
-<table *ngIf="!model.error && model.game && model.game.board && model.game.board.cells && model.game.board.cells.cells" class="centered center-align">
+<table *ngIf="!model.error && model.game && model.game.board && model.game.board.cells && model.game.board.cells.cells" class="card centered center-align">
   <tbody>
   <tr *ngFor="let row of model.game.board.cells.cells">
     <td *ngFor="let cell of row"

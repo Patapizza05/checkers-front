@@ -1,8 +1,11 @@
 export class User {
+  static index : number = 1;
+
   colorPawn: string;
   nbPawns: number;
   pawnDirection: string; //enum
   queenRow: number;
+  name: string = "Player "+User.index++;
 
   static fromJson(user: User): User {
     let self = new User();
