@@ -20,6 +20,7 @@
           <div class="board-pattern valign center-align">
             <a class="btn-floating waves-effect waves-light btn-play white tooltipped"
                materialize="tooltip" data-position="bottom" data-tooltip="Play"
+               [routerLink]="['/dashboard', game.token ]"
             >
               <i class="material-icons right blue-text">play_arrow</i>
             </a>

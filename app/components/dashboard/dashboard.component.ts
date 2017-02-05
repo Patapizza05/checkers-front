@@ -1,17 +1,22 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {CheckersService} from "../../services/checkers.service";
 import {CheckersGameImpl} from "../../model/checkers-game-impl.model";
 import {Model} from "../../model/model.model";
 import {ModelService} from "../../services/model.service";
+import {ActivatedRoute} from "@angular/router";
 @Component({
   moduleId: module.id,
   selector: 'my-dashboard',
   templateUrl: 'dashboard.component.html',
 
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  token: String = 'muelr2zmay';
+  get token(): String { return this.model.token; }
+  set token(token: String) {
+    this.model.token = token;
+    this.loadGame(token);
+  }
 
   model: Model;
 
@@ -24,12 +29,24 @@ export class DashboardComponent {
   }
 
   constructor(private checkersService: CheckersService,
-              private modelService: ModelService) {
+              private modelService: ModelService,
+              private route: ActivatedRoute) {
     this.model = modelService.model;
-    this.loadGame();
   }
 
-  createGame(): void {
+  ngOnInit(): void {
+    this.subscribeParams();
+  }
+
+  subscribeParams(): void {
+    this.route.params.subscribe((param: any) => {
+      if (param['token'] != null) {
+        this.token = param['token'];
+      }
+    });
+  }
+
+/*  createGame(): void {
     this.model.loading = true;
     this.checkersService.createGame().then(game => {
       this.game = game.game;
@@ -37,11 +54,11 @@ export class DashboardComponent {
     }).catch(reason => {
       this.model.error = true;
     })
-  }
+  }*/
 
-  loadGame(): void {
+  loadGame(token: String): void {
     this.model.loading = true;
-    this.checkersService.getGame(this.token).then(game => {
+    this.checkersService.getGame(token).then(game => {
       this.game = game.game;
       this.model.loading = false;
     }).catch(reason => {

@@ -7,6 +7,7 @@ export class Model {
   debug: boolean = false;
 
   game: CheckersGameImpl;
+  token: String;
 
   get error(): boolean {
     return this._error;
@@ -32,6 +33,7 @@ export class Model {
   }
 
   apply(moveResult: MoveResult) {
+    console.log(moveResult);
       if (moveResult != null) {
         if (moveResult.kill != null) {
           let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
@@ -50,6 +52,7 @@ export class Model {
         }
 
         this.game.board.nextUser = moveResult.nextUser;
+        console.log('done');
       }
       else {
         //on failure

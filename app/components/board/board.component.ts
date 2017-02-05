@@ -16,12 +16,13 @@ import {PlayRequest} from "../../model/requests/play-request.model";
 })
 export class BoardComponent {
 
-  token: String = 'muelr2zmay';
   model: Model;
 
   get debug(): boolean {
     return this.model.debug;
   }
+
+  get token(): String { return this.model.token; }
 
   private localGetPossibleMoves = false;
 
