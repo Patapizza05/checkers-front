@@ -11,11 +11,13 @@ import {NavBarComponent} from "./components/navbar/navbar.component";
 import {BoardComponent} from "./components/board/board.component";
 import {CheckersService} from "./services/checkers.service";
 import {PlayerInformationComponent} from "./components/player-information/player-information.component";
+import {ModelService} from "./services/model.service";
+import {GamesComponent} from "./components/games/games.component";
 
 @NgModule({
-  declarations: [ DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent ],
+  declarations: [ DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent, GamesComponent ],
   imports:      [ BrowserModule, FormsModule, HttpModule, MaterializeModule, AppRoutingModule ],
-  providers:    [ CheckersService ],
+  providers:    [ CheckersService, ModelService ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

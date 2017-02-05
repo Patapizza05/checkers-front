@@ -1,8 +1,22 @@
 <nav>
   <div class="nav-wrapper red">
-    <ul id="nav-mobile" class="left hide-on-med-and-down">
-      <li><a href="test.html">New game</a></li>
-      <li><a href="badges.html">Play</a></li>
+    <ul class="left hide-on-med-and-down">
+      <li><a [routerLink]="['games']">Games</a></li>
+      <li><a [routerLink]="['dashboard']">Play</a></li>
+
+    </ul>
+    <ul class="right hide-on-med-and-down">
+      <li><a (click)="new(); false;">New</a></li>
+      <li><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
     </ul>
   </div>
 </nav>
+
+<!-- Dropdown Structure -->
+<ul id='dropdown1' class='dropdown-content'>
+  <li><a click="false;">
+    <input (click)="toggleDebug()" type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+    <label for="filled-in-box">Debug</label>
+  </a></li>
+<!--  <li class="divider"></li>-->
+</ul>

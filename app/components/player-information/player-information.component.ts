@@ -1,6 +1,7 @@
 import {Component, Input, EventEmitter} from "@angular/core";
 import {User} from "../../model/user.model";
 import {Model} from "../../model/model.model";
+import {ModelService} from "../../services/model.service";
 @Component({
   moduleId: module.id,
   selector: 'my-player-information',
@@ -10,10 +11,13 @@ export class PlayerInformationComponent {
   @Input()
   user: User;
 
-  @Input()
   model: Model;
 
-  isEdit: boolean = true;
+  constructor(private modelService: ModelService) {
+    this.model = modelService.model;
+  }
+
+  isEdit: boolean = false;
 
   isTurn(): boolean {
     return this.user.colorPawn == this.model.game.board.nextUser;

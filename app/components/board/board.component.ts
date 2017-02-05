@@ -6,6 +6,8 @@ import {Cell} from "../../model/cell.model";
 import {MoveResult} from "../../model/move-result.model";
 import {Model} from "../../model/model.model";
 import {DashboardComponent} from "../dashboard/dashboard.component";
+import {ModelService} from "../../services/model.service";
+import {PlayRequest} from "../../model/requests/play-request.model";
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -14,8 +16,12 @@ import {DashboardComponent} from "../dashboard/dashboard.component";
 })
 export class BoardComponent {
 
-  @Input()
-    model: Model;
+  token: String = 'muelr2zmay';
+  model: Model;
+
+  get debug(): boolean {
+    return this.model.debug;
+  }
 
   private localGetPossibleMoves = false;
 
@@ -48,9 +54,11 @@ export class BoardComponent {
 
   constructor(
     private checkersService: CheckersService,
+    private modelService: ModelService,
     @Host() @Inject(forwardRef(() => DashboardComponent)) dashboard: DashboardComponent
   ) {
     this.dashboard = dashboard;
+    this.model = modelService.model;
   }
 
 
@@ -73,7 +81,7 @@ export class BoardComponent {
         moves = this.game.board.getPossibleMoves(cell);
       }
       else {
-        this.checkersService.getPossibleMoves(cell.position)
+        this.checkersService.getPossibleMoves(this.token, cell.position)
           .then(response => {
             moves = response;
             for (let move of moves) {
@@ -97,7 +105,7 @@ export class BoardComponent {
   move(move: Move) {
     if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null) return false;
 
-    this.checkersService.play(this.activeCell.position, move.destination.position)
+    this.checkersService.play(this.token, new PlayRequest(this.activeCell.position, move.destination.position))
       .then(moveResult => {
         this.apply(moveResult);
       });

@@ -9,7 +9,15 @@ export class MoveResult {
   nbPawnsUserWhite: number;
   nbPawnsUserBlack: number;
 
-  public static fromJson(moveResult : MoveResult) : MoveResult {
+  public static fromJson(json : MoveResult) : MoveResult {
+    let moveResult = new MoveResult();
+    moveResult.origin = Position.fromJson(json.origin);
+    moveResult.destination = Position.fromJson(json.destination);
+    moveResult.kill = Position.fromJson(json.kill);
+    moveResult.becomesQueen = json.becomesQueen;
+    moveResult.nextUser = json.nextUser;
+    moveResult.nbPawnsUserBlack = json.nbPawnsUserBlack;
+    moveResult.nbPawnsUserWhite = json.nbPawnsUserWhite;
     return moveResult;
   }
 

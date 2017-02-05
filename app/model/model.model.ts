@@ -4,7 +4,7 @@ export class Model {
   _error: boolean = false;
   _loading: boolean = false;
 
-  debug: boolean = true;
+  debug: boolean = false;
 
   game: CheckersGameImpl;
 
