@@ -1,8 +1,8 @@
 <ul materialize="collapsible" class="collapsible popout" data-collapsible="accordion">
   <li *ngFor="let game of games">
     <div class="collapsible-header">
-      <span *ngIf="game.userBlack" class="new badge badge-blue" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
-      <span *ngIf="game.userWhite" class="new badge badge-red" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
+      <span *ngIf="game.userBlack" class="new badge badge-blue" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
+      <span *ngIf="game.userWhite" class="new badge badge-red" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
       <i class="material-icons grey-text">videogame_asset</i>
       {{ game.dateFormat }}
     </div>
