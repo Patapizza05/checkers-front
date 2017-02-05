@@ -26,11 +26,6 @@
   </tbody>
 </table>
 
-<div class="flex info">
-  <span *ngIf="nextUser">Player turn: {{nextUser}}</span>
-  <a class="waves-effect waves-light btn red" (click)="dashboard.createGame();">New game</a>
-</div>
-
 <div class="flex error">
   <div *ngIf="model.loading" class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">

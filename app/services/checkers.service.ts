@@ -28,7 +28,7 @@ export class CheckersService extends CheckersApi {
   }
 
   // PUT : /game/{token}/name
-  setName(token: String, request: UserNameRequest): Promise<String> {
+  setName(token: string, request: UserNameRequest): Promise<string> {
     const url = `${this.url}/game/${token}/name`;
     return this.put(url, request)
       .then(response => response.text())
@@ -44,7 +44,7 @@ export class CheckersService extends CheckersApi {
   }
 
   // GET : /game/{token}
-  getGame(token: String): Promise<GameResponse> {
+  getGame(token: string): Promise<GameResponse> {
     const url = `${this.url}/game/${token}`;
     return this.get(url)
       .then(response => GameResponse.fromJson(response.json() as GameResponse))
@@ -52,7 +52,7 @@ export class CheckersService extends CheckersApi {
   }
 
   // POST : /game/{token}/play
-  play(token: String, request: PlayRequest): Promise<MoveResult> {
+  play(token: string, request: PlayRequest): Promise<MoveResult> {
     const url = `${this.url}/game/${token}/play`;
     return this.post(url, request)
       .then(response => MoveResult.fromJson(response.json() as MoveResult))
@@ -60,7 +60,7 @@ export class CheckersService extends CheckersApi {
   }
 
   // POST : /game/{token}/moves
-  getPossibleMoves(token: String, position: Position): Promise<Move[]> {
+  getPossibleMoves(token: string, position: Position): Promise<Move[]> {
     const url = `${this.url}/game/${token}/moves`;
     return this.post(url, position)
       .then(response => Move.fromJsonArray(response.json() as Move[]))

@@ -1,12 +1,11 @@
 <nav>
   <div class="nav-wrapper red">
     <ul class="left hide-on-med-and-down">
-      <li><a [routerLink]="['games']">Games</a></li>
-      <li><a [routerLink]="['dashboard']">Play</a></li>
+      <li><a [routerLink]="['/games']">Games</a></li>
+      <li><a [routerLink]="['/dashboard', 'new']">New</a></li>
 
     </ul>
     <ul class="right hide-on-med-and-down">
-      <li><a (click)="new(); false;">New</a></li>
       <li><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
     </ul>
   </div>

@@ -22,7 +22,7 @@ export class BoardComponent {
     return this.model.debug;
   }
 
-  get token(): String { return this.model.token; }
+  get token(): string { return this.model.token; }
 
   private localGetPossibleMoves = false;
 

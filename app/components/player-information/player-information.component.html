@@ -9,16 +9,18 @@
     </div>
 
     <div *ngIf="isEdit" class="flex-left">
-      <i class="small material-icons">person</i>
+      <i class="material-icons prefix">person</i>
       <input type="text" [(ngModel)]="user.name"/>
-      <button type="button" (click)="confirm();">Ok</button>
+      <button (click)="confirm();" class="btn waves-effect waves-light confirm-btn" type="submit" name="action">
+        <i class="material-icons right">edit</i>
+      </button>
     </div>
-    <!--    <p>Pawns: {{user.nbPawns}}</p>
-        <p *ngIf="isTurn()">Your turn !</p>-->
   </div>
   <div class="card-action">
     <span [ngClass]="{'red':user.colorPawn == 'WHITE', 'blue': user.colorPawn == 'BLACK'}" class="badge new"
           data-badge-caption="pawns">{{user.nbPawns}}</span>
-    <a (click)="edit();">Edit</a>
+    <a class="edit"  (click)="edit();"
+    [ngClass]="{ 'red-text': user.colorPawn == 'WHITE', 'blue-text': user.colorPawn == 'BLACK'}"
+    >Edit</a>
   </div>
 </div>

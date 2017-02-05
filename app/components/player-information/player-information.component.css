@@ -1,0 +1,21 @@
+a.edit {
+  cursor:pointer;
+  user-select: none;
+}
+
+.prefix {
+  margin: 5px;
+  margin-bottom: 15px;
+}
+
+
+.confirm-btn {
+  padding-right:8px;
+  padding-left:8px;
+  margin:5px;
+}
+/*
+.confirm-btn.material-icons {
+  margin-left:10px;
+}
+*/

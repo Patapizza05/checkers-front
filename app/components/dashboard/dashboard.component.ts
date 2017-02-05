@@ -12,10 +12,9 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DashboardComponent implements OnInit {
 
-  get token(): String { return this.model.token; }
-  set token(token: String) {
+  get token(): string { return this.model.token; }
+  set token(token: string) {
     this.model.token = token;
-    this.loadGame(token);
   }
 
   model: Model;
@@ -41,8 +40,26 @@ export class DashboardComponent implements OnInit {
   subscribeParams(): void {
     this.route.params.subscribe((param: any) => {
       if (param['token'] != null) {
-        this.token = param['token'];
+        if (param['token'] != 'new') {
+          this.token = param['token'];
+          this.loadGame(this.token);
+        }
+        else {
+          this.createGame();
+        }
       }
+    });
+  }
+
+  createGame(): void {
+    this.model.loading = true;
+    this.checkersService.createGame()
+      .then(gameResponse => {
+        this.game = gameResponse.game;
+        this.token = gameResponse.token;
+        this.model.loading = false;
+      }).catch(reason => {
+        this.model.error = true;
     });
   }
 
@@ -56,7 +73,7 @@ export class DashboardComponent implements OnInit {
     })
   }*/
 
-  loadGame(token: String): void {
+  loadGame(token: string): void {
     this.model.loading = true;
     this.checkersService.getGame(token).then(game => {
       this.game = game.game;

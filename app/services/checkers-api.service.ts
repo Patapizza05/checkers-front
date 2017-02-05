@@ -18,18 +18,18 @@ export abstract class CheckersApi extends HttpService {
   abstract getGames(): Promise<LightGame[]>;
 
   // PUT : /game/{token}/name
-  abstract setName(token: String, request: UserNameRequest): Promise<String>;
+  abstract setName(token: string, request: UserNameRequest): Promise<String>;
 
   // GET : /new
   abstract createGame(): Promise<GameResponse>;
 
   // GET : /game/{token}
-  abstract getGame(token: String): Promise<GameResponse>;
+  abstract getGame(token: string): Promise<GameResponse>;
 
   // POST : /game/{token}/play
-  abstract play(token: String, request: PlayRequest): Promise<MoveResult>;
+  abstract play(token: string, request: PlayRequest): Promise<MoveResult>;
 
   // POST : /game/{token}/moves
-  abstract getPossibleMoves(token: String, position: Position): Promise<Move[]>;
+  abstract getPossibleMoves(token: string, position: Position): Promise<Move[]>;
 
 }

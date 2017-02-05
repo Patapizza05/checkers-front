@@ -1,8 +1,8 @@
 import {CheckersGameImpl} from "./checkers-game-impl.model";
 export class GameResponse {
 
-  token: String;
-  creationDate: String;
+  token: string;
+  creationDate: string;
   game: CheckersGameImpl;
 
   static fromJson(json: GameResponse): GameResponse {

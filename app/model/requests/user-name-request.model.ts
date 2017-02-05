@@ -1,10 +1,11 @@
+import {User} from "../user.model";
 export class UserNameRequest {
   color: String;
   name: String;
 
-  constructor(color: String, name: String) {
-    this.color = color;
-    this.name = name;
+  constructor(user: User) {
+    this.color = user.colorPawn;
+    this.name = user.name;
   }
 
 }

@@ -7,7 +7,7 @@ export class Model {
   debug: boolean = false;
 
   game: CheckersGameImpl;
-  token: String;
+  token: string;
 
   get error(): boolean {
     return this._error;
