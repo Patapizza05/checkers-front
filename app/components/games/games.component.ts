@@ -9,17 +9,42 @@ import {LightUser} from "../../model/light-user.model";
 })
 export class GamesComponent {
 
+  loading: boolean = false;
+  error: boolean = false;
   games: LightGame[];
 
   constructor(private checkersService: CheckersService) {
+    this.loadGames();
+  }
+
+  loadGames() {
+    this.loading = true;
+    this.error = false;
     this.checkersService.getGames()
-      .then(games => this.games = games);
+      .then(games => {
+        this.loading = false;
+        this.games = games;
+      })
+      .catch(reason => {
+        this.loading = false;
+        this.error = true;
+      });
   }
 
   newGame() {
+    this.loading = true;
+    this.error = false;
     this.checkersService.createGame()
       .then(game => {
-        this.checkersService.getGames().then(games => this.games = games);
+        this.checkersService.getGames()
+          .then(games => {
+            this.loading = false;
+            this.games = games;
+          });
+      })
+      .catch(reason => {
+        this.loading = false;
+        this.error = true;
       });
   }
 
