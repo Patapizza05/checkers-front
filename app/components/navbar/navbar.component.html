@@ -1,8 +1,9 @@
 <nav>
   <div class="nav-wrapper red">
     <ul class="left hide-on-med-and-down">
-      <li [routerLink]="['/games']" routerLinkActive="active"><a [routerLink]="['/games']" >Games</a></li>
-      <li [routerLink]="['/dashboard', 'new']" routerLinkActive="active"><a [routerLink]="['/dashboard', 'new']">New</a></li>
+      <li [routerLink]="['/games']" routerLinkActive="active"><a [routerLink]="['/games']">Games</a></li>
+      <li [routerLink]="['/dashboard', 'new']" routerLinkActive="active"><a [routerLink]="['/dashboard', 'new']">New</a>
+      </li>
 
     </ul>
     <ul class="right hide-on-med-and-down">
@@ -13,9 +14,12 @@
 
 <!-- Dropdown Structure -->
 <ul id='dropdown1' class='dropdown-content'>
-  <li><a click="false;">
-    <input [(ngModel)]="model.debug" type="checkbox" class="filled-in" id="filled-in-box" />
-    <label for="filled-in-box">Debug</label>
-  </a></li>
-<!--  <li class="divider"></li>-->
+  <li>
+    <a>
+      <input [(ngModel)]="model.debug" type="checkbox" class="filled-in" id="filled-in-box"/>
+      <label for="filled-in-box">Debug</label>
+    </a>
+  </li>
+  <li><a (click)="skip(); false;">Skip</a></li>
+  <!--  <li class="divider"></li>-->
 </ul>

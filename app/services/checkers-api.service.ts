@@ -39,4 +39,6 @@ export abstract class CheckersApi extends HttpService {
   // GET : /game/{token}/history
   abstract getHistory(token: String): Promise<Turn[]>;
 
+  abstract skip(token: String): Promise<GameResponse>;
+
 }

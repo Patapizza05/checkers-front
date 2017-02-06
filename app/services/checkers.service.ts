@@ -84,5 +84,13 @@ export class CheckersService extends CheckersApi {
       .catch(this.handleError.bind(this, url));
   }
 
+  // GET : /game/{token}/skip
+  skip(token: String): Promise<GameResponse> {
+    const url = `${this.url}/game/${token}/skip`;
+    return this.get(url)
+      .then(response => GameResponse.fromJson(response.json() as GameResponse))
+      .catch(this.handleError.bind(this, url));
+  }
+
 
 }
