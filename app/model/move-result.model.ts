@@ -8,6 +8,7 @@ export class MoveResult {
   nextUser: string;
   nbPawnsUserWhite: number;
   nbPawnsUserBlack: number;
+  winningMove: boolean;
 
   public static fromJson(json : MoveResult) : MoveResult {
     if (json == null) return null;
@@ -20,6 +21,7 @@ export class MoveResult {
     moveResult.nextUser = json.nextUser;
     moveResult.nbPawnsUserBlack = json.nbPawnsUserBlack;
     moveResult.nbPawnsUserWhite = json.nbPawnsUserWhite;
+    moveResult.winningMove = json.winningMove;
     return moveResult;
   }
 

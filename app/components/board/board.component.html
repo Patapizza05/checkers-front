@@ -1,5 +1,5 @@
-
-<table *ngIf="!model.error && model.game && model.game.board && model.game.board.cells && model.game.board.cells.cells" class="card centered center-align">
+<table *ngIf="!model.error && model.game && model.game.board && model.game.board.cells && model.game.board.cells.cells"
+       class="card centered center-align">
   <tbody>
   <tr *ngFor="let row of model.game.board.cells.cells">
     <td *ngFor="let cell of row"
@@ -10,8 +10,9 @@
              'possible-red': isActive(cell) && !isActiveColor1()
             }" (click)="move(getMoveFromCell(cell));">
 
-      <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light tooltipped" [ngClass]="{red: cell.pawn.isColorWhite, blue:!cell.pawn.isColorWhite}" (click)="select(cell);">
-<!--      materialize="tooltip" data-position="bottom" data-delay="500" data-tooltip="This is not your turn"-->
+      <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light"
+         [ngClass]="{red: cell.pawn.isColorWhite, blue:!cell.pawn.isColorWhite, hoverable: isPossiblePawn(cell)}" (click)="select(cell);">
+        <!--      materialize="tooltip" data-position="bottom" data-delay="500" data-tooltip="This is not your turn"-->
         <i *ngIf="cell.pawn.isQueen">
           <img src="{{crownIconPath}}"/>
         </i>
@@ -31,17 +32,18 @@
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
         <div class="circle"></div>
-      </div><div class="gap-patch">
-      <div class="circle"></div>
-    </div><div class="circle-clipper right">
-      <div class="circle"></div>
-    </div>
+      </div>
+      <div class="gap-patch">
+        <div class="circle"></div>
+      </div>
+      <div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
     </div>
   </div>
 
   <a *ngIf="model.error" class="waves-effect waves-light btn red" (click)="dashboard.loadGame();">Retry</a>
 </div>
-
 
 
 <ul *ngIf="debug && model && model.game && model.game.history && model.game.history.length > 0" class="collection">
@@ -52,5 +54,46 @@
   </li>
 </ul>
 
+<!-- Modal Trigger -->
+<a class="waves-effect waves-light btn" (click)="openModal();  $event.stopPropagation();">Modal</a>
 
+<!-- Modal Structure -->
+<div id="delete-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+     [materializeActions]="modalActions">
+  <div class="modal-content center-align">
+    <div *ngIf="winningUser" class="row">
+      <div class="col s12 m6 center-align score flex">
+        <h4 *ngIf="winningUser.colorPawn == 'WHITE'" class="red-text">{{winningUser.name}} wins!</h4>
+      </div>
+      <div class="col s12 m6 center-align score flex">
+        <h4 *ngIf="winningUser.colorPawn == 'BLACK'" class="blue-text">{{winningUser.name}} wins!</h4>
+      </div>
+    </div>
+
+    <div *ngIf="winningUser" class="row valign-wrapper">
+      <div class="col s12 m6 center-align score flex">
+        <a class="btn-floating waves-effect waves-light red"
+           [ngClass]="{'btn-large': winningUser.colorPawn == 'WHITE', 'btn-medium': winningUser.colorPawn == 'BLACK'}">
+          <i *ngIf="winningUser.colorPawn == 'WHITE'">
+            <img src="{{crownIconPath}}"/>
+          </i>
+        </a>
+        <h4 class="red-text">{{winningUser.colorPawn == 'WHITE' ? winningUser.nbPawns : 0}}</h4>
+      </div>
+      <div class="col s12 m6 center-align score flex">
+        <h4 class="blue-text">{{winningUser.colorPawn == 'BLACK' ? winningUser.nbPawns : 0}}</h4>
+        <a class="btn-floating waves-effect waves-light blue"
+           [ngClass]="{'btn-large': winningUser.colorPawn == 'BLACK', 'btn-medium': winningUser.colorPawn == 'WHITE'}">
+          <i *ngIf="winningUser.colorPawn == 'BLACK'">
+            <img src="{{crownIconPath}}"/>
+          </i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a [routerLink]="['/games']" class="modal-action waves-effect waves-light btn-flat" (click)="closeModal();">Games</a>
+    <a [routerLink]="['/dashboard', 'new']" class="modal-action waves-effect waves-blue btn-flat" (click)="closeModal();">New</a>
+  </div>
+</div>
 

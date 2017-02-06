@@ -24,6 +24,14 @@ export class Board {
     return null;
   }
 
+  getUserFromPosition(destination: Position):User {
+    try {
+      return this.getUser(this.cells.getFromPosition(destination).pawn);
+    } catch(err) {
+      return null;
+    }
+  }
+
   getPossibleMoves(originCell: Cell): Move[] {
     if (originCell == null) return null;
     let pawn = originCell.pawn;
@@ -105,6 +113,7 @@ export class Board {
     self.nextUser = board.nextUser;
     return self;
   }
+
 
 
 }

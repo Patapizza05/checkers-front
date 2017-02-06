@@ -1,7 +1,8 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule}      from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent }  from './components/app.component';
+import {AppComponent}  from './components/app.component';
+import "/node_modules/materialize-css"
 import {MaterializeModule} from 'angular2-materialize';
 import {FormsModule} from "@angular/forms";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
@@ -14,10 +15,12 @@ import {PlayerInformationComponent} from "./components/player-information/player
 import {ModelService} from "./services/model.service";
 import {GamesComponent} from "./components/games/games.component";
 
+
 @NgModule({
-  declarations: [ DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent, GamesComponent ],
-  imports:      [ BrowserModule, FormsModule, HttpModule, MaterializeModule, AppRoutingModule ],
-  providers:    [ CheckersService, ModelService ],
-  bootstrap:    [ AppComponent ]
+  declarations: [DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent, GamesComponent],
+  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, MaterializeModule],
+  providers: [CheckersService, ModelService],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

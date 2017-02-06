@@ -8,6 +8,9 @@ import {Model} from "../../model/model.model";
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {ModelService} from "../../services/model.service";
 import {PlayRequest} from "../../model/requests/play-request.model";
+import {MaterializeAction} from "angular2-materialize";
+import {User} from "../../model/user.model";
+
 @Component({
   moduleId: module.id,
   selector: 'my-board',
@@ -18,19 +21,24 @@ export class BoardComponent {
 
   model: Model;
 
+  winningUser: User = null;
+
   get debug(): boolean {
     return this.model.debug;
   }
 
-  get token(): string { return this.model.token; }
+  get token(): string {
+    return this.model.token;
+  }
 
   private localGetPossibleMoves = false;
 
   dashboard: DashboardComponent; //Parent
 
-  get game() : CheckersGameImpl {
+  get game(): CheckersGameImpl {
     return this.model.game;
   }
+
   set game(game: CheckersGameImpl) {
     this.model.game = game;
   }
@@ -44,7 +52,7 @@ export class BoardComponent {
     try {
       return this.game.board.nextUser;
 
-    }catch(err) {
+    } catch (err) {
       return null;
     }
   }
@@ -53,11 +61,9 @@ export class BoardComponent {
     this.game.board.nextUser = nextUser;
   }
 
-  constructor(
-    private checkersService: CheckersService,
-    private modelService: ModelService,
-    @Host() @Inject(forwardRef(() => DashboardComponent)) dashboard: DashboardComponent
-  ) {
+  constructor(private checkersService: CheckersService,
+              private modelService: ModelService,
+              @Host() @Inject(forwardRef(() => DashboardComponent)) dashboard: DashboardComponent) {
     this.dashboard = dashboard;
     this.model = modelService.model;
   }
@@ -74,7 +80,6 @@ export class BoardComponent {
     if (cell != null && cell.pawn != null && cell.pawn.color == this.game.board.nextUser) {
 
       this.activeMoves = [];
-
 
 
       let moves: Move[] = [];
@@ -96,7 +101,7 @@ export class BoardComponent {
               this.activeCell = cell;
               this.activeMoves.push(move);
             }
-        })
+          })
       }
 
 
@@ -127,12 +132,29 @@ export class BoardComponent {
     return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.isColorWhite;
   }
 
+  isPossiblePawn(cell: Cell): boolean {
+    return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextUser : false;
+  }
+
 
   apply(moveResult: MoveResult) {
     this.model.apply(moveResult);
     this.activeCell = null;
     this.activeMoves = [];
+    if (moveResult.winningMove) {
+      this.winningUser = this.model.game.board.getUserFromPosition(moveResult.destination);
+      this.openModal();
+    }
   }
 
+  modalActions = new EventEmitter<string|MaterializeAction>();
 
+  openModal() {
+    this.winningUser = this.model.game.board.userBlack;
+    this.modalActions.emit({action: "modal", params: ['open']});
+  }
+
+  closeModal() {
+    this.modalActions.emit({action: "modal", params: ['close']});
+  }
 }
