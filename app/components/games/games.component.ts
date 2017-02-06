@@ -48,4 +48,18 @@ export class GamesComponent {
       });
   }
 
+  deleteGame(token: string) {
+    this.loading = true;
+    this.error = false;
+    this.checkersService.deleteGame(token)
+      .then(token => {
+        this.games = this.games.filter(g => g.token != token);
+        this.loading = false;
+      })
+      .catch(err => {
+        this.loading = false;
+        this.error = true;
+      });
+  }
+
 }

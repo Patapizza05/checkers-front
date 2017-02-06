@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
         this.game = gameResponse.game;
         this.token = gameResponse.token;
         this.model.loading = false;
+        this.loadHistory(this.token);
       }).catch(reason => {
         this.model.error = true;
     });
@@ -78,9 +79,15 @@ export class DashboardComponent implements OnInit {
     this.checkersService.getGame(token).then(game => {
       this.game = game.game;
       this.model.loading = false;
+      this.loadHistory(token);
     }).catch(reason => {
       this.model.error = true;
     });
+  }
+
+  loadHistory(token: string): void {
+    this.checkersService.getHistory(token)
+      .then(history => this.model.game.history = history);
   }
 
 

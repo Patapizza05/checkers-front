@@ -7,6 +7,7 @@ import {UserNameRequest} from "../model/requests/user-name-request.model";
 import {PlayRequest} from "../model/requests/play-request.model";
 import {Position} from "../model/position.model";
 import {GameResponse} from "../model/game-response.model";
+import {Turn} from "../model/turn.model";
 
 export abstract class CheckersApi extends HttpService {
 
@@ -31,5 +32,11 @@ export abstract class CheckersApi extends HttpService {
 
   // POST : /game/{token}/moves
   abstract getPossibleMoves(token: string, position: Position): Promise<Move[]>;
+
+  // DELETE : /game/{token}
+  abstract deleteGame(token: String): Promise<String>;
+
+  // GET : /game/{token}/history
+  abstract getHistory(token: String): Promise<Turn[]>;
 
 }

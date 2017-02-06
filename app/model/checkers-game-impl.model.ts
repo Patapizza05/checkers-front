@@ -1,10 +1,13 @@
 import {Board} from "./board.model";
+import {Turn} from "./turn.model";
 export class CheckersGameImpl {
   board: Board;
   nbColumns: number;
   nbPawnRows: number;
   nbPawnsPerUser: number;
   nbRows: number;
+
+  history: Turn[] = [];
 
   public static fromJson(game: CheckersGameImpl): CheckersGameImpl {
     let self = new CheckersGameImpl();

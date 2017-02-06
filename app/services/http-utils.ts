@@ -27,6 +27,11 @@ export abstract class HttpService {
     return this.http.put(url, data, {headers: this.headers}).toPromise();
   }
 
+  delete(url: string): Promise<Response> {
+    console.log(url);
+    return this.http.delete(url, {headers: this.headers}).toPromise();
+  }
+
   handleError(error: any, url: string): Promise<any> {
     console.error('An error occured at', url); //for demo purposes only
     console.error(error);

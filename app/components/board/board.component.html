@@ -26,7 +26,7 @@
   </tbody>
 </table>
 
-<div class="flex error">
+<div *ngIf="model.loading || model.error" class="flex error">
   <div *ngIf="model.loading" class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
@@ -41,6 +41,16 @@
 
   <a *ngIf="model.error" class="waves-effect waves-light btn red" (click)="dashboard.loadGame();">Retry</a>
 </div>
+
+
+
+<ul *ngIf="debug && model && model.game && model.game.history && model.game.history.length > 0" class="collection">
+  <li *ngFor="let turn of model.game.history" class="collection-item row valign-wrapper">
+    <span class="col s5 text-align-center">{{turn.origin.toString()}}</span>
+    <i class="material-icons col s2 text-align-center">keyboard_arrow_right</i>
+    <span class="col s5 text-align-center">{{turn.destination.toString()}}</span>
+  </li>
+</ul>
 
 
 

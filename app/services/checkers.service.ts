@@ -10,6 +10,7 @@ import {GameResponse} from "../model/game-response.model";
 import {PlayRequest} from "../model/requests/play-request.model";
 import {Http} from "@angular/http";
 import {ContentType} from "./http-utils";
+import {Turn} from "../model/turn.model";
 
 @Injectable()
 export class CheckersService extends CheckersApi {
@@ -66,5 +67,22 @@ export class CheckersService extends CheckersApi {
       .then(response => Move.fromJsonArray(response.json() as Move[]))
       .catch(this.handleError.bind(this, url));
   }
+
+  // DELETE : /game/{token}
+  deleteGame(token: String): Promise<String> {
+    const url = `${this.url}/game/${token}`;
+    return this.delete(url)
+      .then(response => response.text() as string)
+      .catch(this.handleError.bind(this, url));
+  }
+
+  // GET : /game/{token}/history
+  getHistory(token: String): Promise<Turn[]> {
+    const url = `${this.url}/game/${token}/history`;
+    return this.get(url)
+      .then(response => Turn.fromJsonArray(response.json() as Turn[]))
+      .catch(this.handleError.bind(this, url));
+  }
+
 
 }

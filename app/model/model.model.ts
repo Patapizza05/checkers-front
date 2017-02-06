@@ -1,5 +1,6 @@
 import {CheckersGameImpl} from "./checkers-game-impl.model";
 import {MoveResult} from "./move-result.model";
+import {Turn} from "./turn.model";
 export class Model {
   _error: boolean = false;
   _loading: boolean = false;
@@ -52,7 +53,9 @@ export class Model {
         }
 
         this.game.board.nextUser = moveResult.nextUser;
-        console.log('done');
+
+        let turn: Turn = { origin: moveResult.origin, destination: moveResult.destination};
+        this.game.history.push(turn);
       }
       else {
         //on failure

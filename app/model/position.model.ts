@@ -18,4 +18,8 @@ export class Position {
   equals(position: Position) : boolean {
     return this.row == position.row && this.column == position.column;
   }
+
+  toString(): string {
+    return `${this.row}:${this.column}`
+  }
 }

@@ -20,11 +20,6 @@ export class NavBarComponent {
     this.checkersService.createGame().then(game => this.model.game = game.game).catch(err => console.log(err));
   }
 
-  toggleDebug() {
-    this.model.debug = !this.model.debug;
-    return false;
-  }
-
 
 
 }

@@ -1,9 +1,17 @@
 <ul materialize="collapsible" class="collapsible popout" data-collapsible="accordion">
   <li *ngFor="let game of games">
+
+
     <div class="collapsible-header">
       <span *ngIf="game.userBlack" class="new badge badge-blue" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
       <span *ngIf="game.userWhite" class="new badge badge-red" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
-      <i class="material-icons grey-text">videogame_asset</i>
+
+
+      <i class="material-icons"
+         [ngClass]="{ 'grey-text': game.userBlack.nbPawns == game.userWhite.nbPawns, 'red-text': game.userWhite.nbPawns < game.userBlack.nbPawns, 'blue-text': game.userBlack.nbPawns < game.userWhite.nbPawns }"
+      >
+        videogame_asset
+      </i>
       {{ game.dateFormat }}
     </div>
 
@@ -18,7 +26,7 @@
         </div>
         <div class="col s6 valign center-align">
           <div class="board-pattern valign center-align">
-            <a class="btn-floating waves-effect waves-light btn-play white tooltipped"
+            <a class="btn-floating waves-effect btn-play white tooltipped"
                materialize="tooltip" data-position="bottom" data-tooltip="Play"
                [routerLink]="['/dashboard', game.token ]"
             >
@@ -35,7 +43,9 @@
       </div>
       <div class="row">
         <div class="col s11"></div>
-        <a href="#" (click)="false;" class="col s1 grey-text darken-2"><i class="material-icons">delete</i></a>
+        <div class="col s1">
+          <a (click)="deleteGame(game.token); false;" class="btn-floating btn-small waves-effect white"><i class="material-icons grey-text">delete</i></a>
+        </div>
       </div>
     </div>
   </li>
