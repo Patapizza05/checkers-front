@@ -150,7 +150,6 @@ export class BoardComponent {
   modalActions = new EventEmitter<string|MaterializeAction>();
 
   openModal() {
-    this.winningUser = this.model.game.board.userBlack;
     this.modalActions.emit({action: "modal", params: ['open']});
   }
 
