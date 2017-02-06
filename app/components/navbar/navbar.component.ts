@@ -9,12 +9,12 @@ import {Model} from "../../model/model.model";
 })
 export class NavBarComponent {
 
-  model: Model;
+  get model(): Model {
+    return this.modelService.model;
+  }
 
   constructor(private checkersService: CheckersService,
               private modelService: ModelService) {
-    this.model = modelService.model;
-    console.log(this.model);
   }
 
   new(): void {
@@ -40,8 +40,5 @@ export class NavBarComponent {
     this.checkersService.getHistory(token)
       .then(history => this.model.game.history = history);
   }
-
-
-
 
 }

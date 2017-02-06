@@ -5,6 +5,7 @@ import {Model} from "../../model/model.model";
 import {ModelService} from "../../services/model.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
+import {GameResponse} from "../../model/game-response.model";
 @Component({
   moduleId: module.id,
   selector: 'my-dashboard',
@@ -61,35 +62,28 @@ export class DashboardComponent implements OnInit {
     this.model.loading = true;
     this.checkersService.createGame()
       .then(gameResponse => {
-        this.game = gameResponse.game;
-        this.token = gameResponse.token;
-        this.model.loading = false;
-        this.location.go(`/dashboard/${this.token}`);
-        this.loadHistory(this.token);
+        this.updateGame(gameResponse);
+        this.location.go(`/dashboard/${gameResponse.token}`);
       }).catch(reason => {
       this.model.error = true;
     });
   }
 
-  /*  createGame(): void {
-   this.model.loading = true;
-   this.checkersService.createGame().then(game => {
-   this.game = game.game;
-   this.model.loading = false;
-   }).catch(reason => {
-   this.model.error = true;
-   })
-   }*/
-
   loadGame(token: string): void {
     this.model.loading = true;
-    this.checkersService.getGame(token).then(game => {
-      this.game = game.game;
-      this.model.loading = false;
-      this.loadHistory(token);
+    this.checkersService.getGame(token).then(gameResponse => {
+      this.updateGame(gameResponse);
     }).catch(reason => {
       this.model.error = true;
     });
+  }
+
+  updateGame(gameResponse: GameResponse) {
+    this.game = gameResponse.game;
+    this.token = gameResponse.token;
+    this.model.loading = false;
+    console.log(this.model);
+    this.loadHistory(gameResponse.token);
   }
 
   loadHistory(token: string): void {
