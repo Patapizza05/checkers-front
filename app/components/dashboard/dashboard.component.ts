@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
               private modelService: ModelService,
               private route: ActivatedRoute,
               private location: Location) {
+    modelService.clear();
     this.model = modelService.model;
   }
 

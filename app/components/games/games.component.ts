@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {CheckersService} from "../../services/checkers.service";
 import {LightGame} from "../../model/light-game.model";
 import {LightUser} from "../../model/light-user.model";
+import {ModelService} from "../../services/model.service";
 @Component({
   moduleId: module.id,
   templateUrl: 'games.component.html',
@@ -13,8 +14,10 @@ export class GamesComponent {
   error: boolean = false;
   games: LightGame[];
 
-  constructor(private checkersService: CheckersService) {
+  constructor(private checkersService: CheckersService,
+  modelService: ModelService) {
     this.loadGames();
+    modelService.clear();
   }
 
   loadGames() {

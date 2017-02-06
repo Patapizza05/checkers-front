@@ -7,4 +7,7 @@ export class ModelService {
     return this._model;
   }
 
+  clear() {
+    this._model = new Model();
+  }
 }
