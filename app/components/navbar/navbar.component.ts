@@ -27,6 +27,7 @@ export class NavBarComponent {
       .then(gameResponse => {
         if (gameResponse != null) {
           this.model.game = gameResponse.game;
+          this.loadHistory(this.model.token);
         }
         this.model.loading = false;
       })
@@ -34,6 +35,12 @@ export class NavBarComponent {
         this.model.error = true;
       })
   }
+
+  loadHistory(token: string): void {
+    this.checkersService.getHistory(token)
+      .then(history => this.model.game.history = history);
+  }
+
 
 
 
