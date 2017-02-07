@@ -49,4 +49,45 @@ export class PlayerInformationComponent {
       });
     this.isEdit = false;
   }
+
+  /** UI **/
+  //MaterialColors
+  cardClasses(): {[key: string]: boolean} {
+    let result: {[key: string]: boolean} = {};
+    let isTurn = this.isTurn();
+    let isColorWhite = this.user.isColorWhite();
+    let isColorBlack = this.user.isColorBlack();
+
+    this.addClass(result, this.model.colors.player_bottom_black_text_on_player_background, isTurn && isColorBlack);
+    this.addClass(result, this.model.colors.player_top_white_text_on_player_background, isTurn && isColorWhite);
+    this.addClass(result, this.model.colors.player_info_text_not_turn, !isTurn);
+    this.addClass(result, this.model.colors.player_top_white, isTurn && isColorWhite);
+    this.addClass(result, this.model.colors.player_bottom_black, isTurn && isColorBlack);
+    return result;
+  };
+
+  badgeClasses(): {[key: string]: boolean} {
+    let result: {[key: string]: boolean} = {};
+    this.addClass(result, this.model.colors.player_bottom_black, this.user.isColorBlack());
+    this.addClass(result, this.model.colors.player_top_white, this.user.isColorWhite());
+    return result;
+  }
+
+  editLinkClasses(): {[key: string]: boolean} {
+    let result: {[key: string]: boolean} = {};
+    this.addClass(result, this.model.colors.player_top_white_text, this.user.isColorWhite());
+    this.addClass(result, this.model.colors.player_bottom_black_text, this.user.isColorBlack());
+    return result;
+  }
+
+  private addClass(result: {[key: string]: boolean}, key: string, value: boolean): void
+  {
+    if (result.hasOwnProperty(key)) {
+      result[key] = result[key] || value;
+    }
+    else {
+      result[key] = value;
+    }
+  }
+
 }

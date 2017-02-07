@@ -4,15 +4,14 @@
 
 
       <div class="collapsible-header">
-        <span *ngIf="game.userBlack" class="new badge badge-blue"
-              data-badge-caption="">{{game.userBlack.nbPawns}}</span>
-        <span *ngIf="game.userWhite" class="new badge badge-red" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
+        <span *ngIf="game.userBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
+        <span *ngIf="game.userWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
 
 
         <i class="material-icons"
-           [ngClass]="{ 'grey-text': game.userBlack.nbPawns == game.userWhite.nbPawns, 'red-text': game.userWhite.nbPawns < game.userBlack.nbPawns, 'blue-text': game.userBlack.nbPawns < game.userWhite.nbPawns }"
+           [ngClass]="gamesClasses(game)"
         >
-          videogame_asset
+          {{model.icons.game_icon}}
         </i>
         {{ game.dateFormat }}
       </div>
@@ -21,23 +20,23 @@
       <div class="collapsible-body">
         <div class="row collapsible-body-row">
           <div class="col s3 valign center-align">
-            <a *ngIf="game.userWhite" class="btn-floating btn-large waves-effect waves-light tooltipped red">
+            <a *ngIf="game.userWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
               {{ game.userWhite.nbPawns }}
             </a>
             <p>{{game.userWhite.name}}</p>
           </div>
           <div class="col s6 valign center-align">
             <div class="board-pattern valign center-align">
-              <a class="btn-floating waves-effect btn-play white tooltipped"
-                 materialize="tooltip" data-position="bottom" data-tooltip="Play"
-                 [routerLink]="['/dashboard', game.token ]"
+              <a class="btn-floating waves-effect btn-play {{model.colors.play_button_background}} tooltipped"
+                 materialize="tooltip" data-position="bottom" [attr.data-tooltip]="model.vocabulary.play"
+                 [routerLink]="model.urls.game(game.token)"
               >
-                <i class="material-icons right blue-text">play_arrow</i>
+                <i class="material-icons right {{ model.colors.play_button_color }}">{{model.icons.play_icon}}</i>
               </a>
             </div>
           </div>
           <div class="col s3 valign center-align">
-            <a *ngIf="game.userBlack" class="btn-floating btn-large waves-effect waves-light tooltipped blue">
+            <a *ngIf="game.userBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
               {{ game.userBlack.nbPawns }}
             </a>
             <p>{{game.userBlack.name}}</p>
@@ -46,8 +45,8 @@
         <div class="row">
           <div class="col s11"></div>
           <div class="col s1">
-            <a (click)="deleteGame(game.token); false;" class="btn-floating btn-small waves-effect white"><i
-              class="material-icons grey-text">delete</i></a>
+            <a (click)="deleteGame(game.token); false;" class="btn-floating btn-small waves-effect {{model.colors.delete_button_background}}"><i
+              class="material-icons {{model.colors.delete_button_color}}">{{model.icons.delete_icon}}</i></a>
           </div>
         </div>
       </div>
@@ -56,7 +55,7 @@
 
   <div *ngIf="games && !error && games.length == 0" class="row center-align">
     <a [routerLink]="['/dashboard','new']" class="waves-effect waves-light btn red"><i
-      class="material-icons right">add</i>New game</a>
+      class="material-icons right">{{model.icons.new_icon}}</i>{{model.vocabulary.new_game_long}}</a>
   </div>
 
   <div *ngIf="error || loading" class="flex error">
@@ -74,12 +73,12 @@
       </div>
     </div>
 
-    <a *ngIf="error" class="waves-effect waves-light btn red" (click)="loadGames();">Retry</a>
+    <a *ngIf="error" class="waves-effect waves-light btn {{model.colors.navbar_background}}" (click)="loadGames();">{{model.vocabulary.retry}}</a>
   </div>
 
   <div *ngIf="games && !error && games.length > 0" class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light red" [routerLink]="['/dashboard', 'new']"><i
-      class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light {{model.colors.navbar_background}}" [routerLink]="model.urls.new()"><i
+      class="material-icons">{{model.icons.new_icon}}</i></a>
   </div>
 
 </div>

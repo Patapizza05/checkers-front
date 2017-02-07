@@ -27,12 +27,34 @@ export class BoardComponent {
   private localGetPossibleMoves = false;
   private activeCell: Cell;
   private activeMoves: Move[] = [];
-  get debug(): boolean { return this.model.debug; }
-  get token(): string { return this.model.token; }
-  get game(): CheckersGameImpl { return this.model.game; }
-  set game(game: CheckersGameImpl) { this.model.game = game; }
-  get nextUser(): string { try { return this.game.board.nextUser; } catch (err) { return null; } }
-  set nextUser(nextUser: string) { this.game.board.nextUser = nextUser; }
+
+  get debug(): boolean {
+    return this.model.debug;
+  }
+
+  get token(): string {
+    return this.model.token;
+  }
+
+  get game(): CheckersGameImpl {
+    return this.model.game;
+  }
+
+  set game(game: CheckersGameImpl) {
+    this.model.game = game;
+  }
+
+  get nextUser(): string {
+    try {
+      return this.game.board.nextUser;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  set nextUser(nextUser: string) {
+    this.game.board.nextUser = nextUser;
+  }
 
   /** CONSTRUCTOR **/
 
@@ -115,7 +137,7 @@ export class BoardComponent {
       });
   }
 
-  move_error(move: Move):boolean {
+  move_error(move: Move): boolean {
     return this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null
   }
 
@@ -141,22 +163,22 @@ export class BoardComponent {
     let isPossibleDestinationCell = this.isPossibleDestinationCell(cell);
     let isActivePawnWhite = this.isActivePawnWhite();
 
-    result[this.model.colors.light_cells] = cell.isColorLight;
-    result[this.model.colors.dark_cells] = cell.isColorDark;
-    result[this.model.colors.player_top_white_possible_cells] = isPossibleDestinationCell && isActivePawnWhite;
-    result[this.model.colors.player_bottom_black_possible_cells] = isPossibleDestinationCell && !isActivePawnWhite;
+    this.addClass(result, this.model.colors.light_cells, cell.isColorLight);
+    this.addClass(result, this.model.colors.dark_cells, cell.isColorDark);
+    this.addClass(result, this.model.colors.player_top_white_possible_cells, isPossibleDestinationCell && isActivePawnWhite);
+    this.addClass(result, this.model.colors.player_bottom_black_possible_cells, isPossibleDestinationCell && !isActivePawnWhite);
 
     return result;
   };
 
-  pawnClasses(cell: Cell): {[key: string]:boolean} {
+  pawnClasses(cell: Cell): {[key: string]: boolean} {
     let result: {[key: string]: boolean} = {};
     let pawn = cell.pawn;
     let isColorWhite = pawn.isColorWhite;
 
-    result[this.model.colors.player_top_white] = isColorWhite;
-    result[this.model.colors.player_bottom_black] = !isColorWhite;
-    result[this.model.colors.movable_pawn] = this.isPawnMovable(cell);
+    this.addClass(result, this.model.colors.player_top_white, isColorWhite);
+    this.addClass(result, this.model.colors.player_bottom_black, !isColorWhite);
+    this.addClass(result, this.model.colors.movable_pawn, this.isPawnMovable(cell));
 
     return result;
   }
@@ -171,6 +193,15 @@ export class BoardComponent {
 
   isPawnMovable(cell: Cell): boolean {
     return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextUser : false;
+  }
+
+  private addClass(result: {[key: string]: boolean}, key: string, value: boolean): void {
+    if (result.hasOwnProperty(key)) {
+      result[key] = result[key] || value;
+    }
+    else {
+      result[key] = value;
+    }
   }
 
 

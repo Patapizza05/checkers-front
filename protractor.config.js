@@ -5,7 +5,7 @@
 //
 // AND THEN EVERYTIME ...
 //   1. Compile with `tsc`
-//   2. Make sure the boardClasses server (e.g., http-server: localhost:8080) is running.
+//   2. Make sure the cardClasses server (e.g., http-server: localhost:8080) is running.
 //   3. ./node_modules/.bin/protractor protractor.config.js
 //
 //   To do all steps, try:  `npm run e2e`

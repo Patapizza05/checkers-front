@@ -39,9 +39,9 @@ export class DashboardComponent implements OnInit {
 
   subscribeParams(): void {
     this.route.params.subscribe((param: any) => {
-      if (param['token'] != null) {
-        if (param['token'] != 'new') {
-          this.token = param['token'];
+      if (param[this.model.urls.param_token] != null) {
+        if (param[this.model.urls.param_token] != this.model.urls.token_new) {
+          this.token = param[this.model.urls.param_token];
           this.loadGame(this.token);
         }
         else {
@@ -59,7 +59,6 @@ export class DashboardComponent implements OnInit {
       .then(gameResponse => {
         this.updateGame(gameResponse);
         this.location.go(Urls.toUrl(this.model.urls.game(gameResponse.token)));
-        this.location.go(`/dashboard/${gameResponse.token}`);
       }).catch(reason => {
       this.model.error = true;
     });

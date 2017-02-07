@@ -7,8 +7,11 @@ export class Urls {
     return ['/dashboard', token];
   }
 
+  get token_new(): string { return 'new'; }
+  get param_token(): string { return 'token'; }
+
   new(): string[] {
-    return ['/dashboard', 'new'];
+    return ['/dashboard', this.token_new];
   }
 
   static toUrl(url: string[]) {

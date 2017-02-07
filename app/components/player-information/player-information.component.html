@@ -1,26 +1,24 @@
 <div class="card">
-  <div class="card-content" [ngClass]="{
-  'white-text': isTurn(), 'grey-text text-darken-4' : !isTurn(),
-  'white': !isTurn(), 'blue': isTurn() && user.colorPawn == 'BLACK', 'red': isTurn() && user.colorPawn == 'WHITE' }">
+  <div class="card-content" [ngClass]="cardClasses()">
 
     <div *ngIf="!isEdit" class="flex-left">
-      <i class="small material-icons">person</i>
+      <i class="small material-icons">{{model.icons.player_icon}}</i>
       <span style="margin-left:10px" class="card-title">{{user.name}}</span>
     </div>
 
     <div *ngIf="isEdit" class="flex-left">
-      <i class="material-icons prefix">person</i>
+      <i class="material-icons prefix">{{model.icons.player_icon}}</i>
       <input type="text" [(ngModel)]="user.name"/>
       <button (click)="confirm();" class="btn waves-effect waves-light confirm-btn" type="submit" name="action">
-        <i class="material-icons right">edit</i>
+        <i class="material-icons right">{{model.icons.edit_icon}}</i>
       </button>
     </div>
   </div>
   <div class="card-action">
-    <span [ngClass]="{'red':user.colorPawn == 'WHITE', 'blue': user.colorPawn == 'BLACK'}" class="badge new"
-          data-badge-caption="pawns">{{user.nbPawns}}</span>
+    <span [ngClass]="badgeClasses()" class="badge new"
+          [attr.data-badge-caption]="model.vocabulary.pawns_no_caps">{{user.nbPawns}}</span>
     <a class="edit"  (click)="edit();"
-    [ngClass]="{ 'red-text': user.colorPawn == 'WHITE', 'blue-text': user.colorPawn == 'BLACK'}"
-    >Edit</a>
+    [ngClass]="editLinkClasses()"
+    >{{model.vocabulary.edit}}</a>
   </div>
 </div>
