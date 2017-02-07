@@ -6,6 +6,7 @@ export class GameResponse {
   game: CheckersGameImpl;
 
   static fromJson(json: GameResponse): GameResponse {
+    if (json == null) return null;
     let gameResponse = new GameResponse();
     gameResponse.token = json.token;
     gameResponse.creationDate = json.creationDate;
