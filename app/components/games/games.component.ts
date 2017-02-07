@@ -74,8 +74,8 @@ export class GamesComponent {
   gamesClasses(game: LightGame): {[key: string]: boolean} {
     let result: {[key: string]: boolean} = {};
     this.addClass(result, this.model.colors.neutral_player_color_text, game.userBlack.nbPawns == game.userWhite.nbPawns);
-    this.addClass(result, this.model.colors.player_bottom_black_text, game.userBlack.nbPawns < game.userWhite.nbPawns);
-    this.addClass(result, this.model.colors.player_top_white_text, game.userWhite.nbPawns < game.userBlack.nbPawns);
+    this.addClass(result, this.model.colors.player_bottom_black_text, game.userBlack.nbPawns > game.userWhite.nbPawns);
+    this.addClass(result, this.model.colors.player_top_white_text, game.userWhite.nbPawns > game.userBlack.nbPawns);
     return result;
   };
 
