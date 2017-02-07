@@ -10,15 +10,30 @@
       <i class="material-icons prefix">{{model.icons.player_icon}}</i>
       <input type="text" [(ngModel)]="user.name"/>
       <button (click)="confirm();" class="btn waves-effect waves-light confirm-btn" type="submit" name="action">
-        <i class="material-icons right">{{model.icons.edit_icon}}</i>
+        <i class="material-icons right">{{model.icons.confirm_icon}}</i>
       </button>
     </div>
   </div>
   <div class="card-action">
     <span [ngClass]="badgeClasses()" class="badge new"
           [attr.data-badge-caption]="model.vocabulary.pawns_no_caps">{{user.nbPawns}}</span>
-    <a class="edit"  (click)="edit();"
-    [ngClass]="editLinkClasses()"
-    >{{model.vocabulary.edit}}</a>
+    <span class="flex-left">
+      <a class="edit" materialize="dropdown" [attr.data-activates]="'dropdown-color'+user.colorPawn">
+        <i class="material-icons" [ngClass]="editLinkClasses()">{{model.icons.color_choose_icon}}</i>
+      </a>
+      <a class="edit" (click)="edit();" [ngClass]="editLinkClasses()">
+        <i class="material-icons">{{model.icons.edit_icon}}</i>
+      </a>
+      </span>
   </div>
 </div>
+
+
+<!-- Dropdown Structure -->
+<ul [attr.id]="'dropdown-color'+user.colorPawn" class='dropdown-content'>
+  <li class="{{color}}" *ngFor="let color of model.colors.colors"
+      (click)="selectColor(color); false;">
+    <a></a>
+  </li>
+</ul>
+

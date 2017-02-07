@@ -163,8 +163,8 @@ export class BoardComponent {
     let isPossibleDestinationCell = this.isPossibleDestinationCell(cell);
     let isActivePawnWhite = this.isActivePawnWhite();
 
-    this.addClass(result, this.model.colors.light_cells, cell.isColorLight);
-    this.addClass(result, this.model.colors.dark_cells, cell.isColorDark);
+    this.addClass(result, this.model.colors.light_cells, cell.isColorLight && !isPossibleDestinationCell);
+    this.addClass(result, this.model.colors.dark_cells, cell.isColorDark && !isPossibleDestinationCell);
     this.addClass(result, this.model.colors.player_top_white_possible_cells, isPossibleDestinationCell && isActivePawnWhite);
     this.addClass(result, this.model.colors.player_bottom_black_possible_cells, isPossibleDestinationCell && !isActivePawnWhite);
 

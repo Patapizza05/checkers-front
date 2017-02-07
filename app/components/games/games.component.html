@@ -54,7 +54,7 @@
   </ul>
 
   <div *ngIf="games && !error && games.length == 0" class="row center-align">
-    <a [routerLink]="['/dashboard','new']" class="waves-effect waves-light btn red"><i
+    <a [routerLink]="model.urls.new()" class="waves-effect waves-light btn red"><i
       class="material-icons right">{{model.icons.new_icon}}</i>{{model.vocabulary.new_game_long}}</a>
   </div>
 

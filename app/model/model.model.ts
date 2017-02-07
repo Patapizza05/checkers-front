@@ -42,6 +42,11 @@ export class Model {
     this._loading = false;
   }
 
+  resetModel(): void {
+    this.game = null;
+    this.token = null;
+  }
+
   apply(moveResult: MoveResult) {
     console.log(moveResult);
       if (moveResult != null) {

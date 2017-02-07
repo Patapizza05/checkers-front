@@ -50,6 +50,17 @@ export class PlayerInformationComponent {
     this.isEdit = false;
   }
 
+  get colors(): string[] {
+    let excludedColor: string;
+    if (this.isPlayerBlack()) {
+      excludedColor = this.model.colors.player_top_white;
+    }
+    else {
+      excludedColor = this.model.colors.player_bottom_black;
+    }
+    return this.model.colors.colors.filter(c => c != excludedColor);
+  }
+
   /** UI **/
   //MaterialColors
   cardClasses(): {[key: string]: boolean} {
@@ -87,6 +98,15 @@ export class PlayerInformationComponent {
     }
     else {
       result[key] = value;
+    }
+  }
+
+  selectColor(color: string) {
+    if (this.user.isColorBlack()) {
+      this.model.colors.player_bottom_black = color;
+    }
+    else {
+      this.model.colors.player_top_white = color;
     }
   }
 

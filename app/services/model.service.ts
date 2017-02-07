@@ -8,6 +8,6 @@ export class ModelService {
   }
 
   clear() {
-    this._model = new Model();
+    this._model.resetModel();
   }
 }
