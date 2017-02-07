@@ -6,6 +6,7 @@ import {ModelService} from "../../services/model.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
 import {GameResponse} from "../../model/game-response.model";
+import {Urls} from "../../model/urls.model";
 @Component({
   moduleId: module.id,
   selector: 'my-dashboard',
@@ -14,23 +15,15 @@ import {GameResponse} from "../../model/game-response.model";
 })
 export class DashboardComponent implements OnInit {
 
-  get token(): string {
-    return this.model.token;
-  }
-
-  set token(token: string) {
-    this.model.token = token;
-  }
+  /** VARIABLES **/
 
   model: Model;
+  get token(): string { return this.model.token; }
+  set token(token: string) { this.model.token = token; }
+  get game(): CheckersGameImpl { return this.model.game; }
+  set game(game: CheckersGameImpl) { this.model.game = game; }
 
-  get game(): CheckersGameImpl {
-    return this.model.game;
-  }
-
-  set game(game: CheckersGameImpl) {
-    this.model.game = game;
-  }
+  /** CONSTRUCTOR && CREATION **/
 
   constructor(private checkersService: CheckersService,
               private modelService: ModelService,
@@ -58,11 +51,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /** GAME METHODS **/
+
   createGame(): void {
     this.model.loading = true;
     this.checkersService.createGame()
       .then(gameResponse => {
         this.updateGame(gameResponse);
+        this.location.go(Urls.toUrl(this.model.urls.game(gameResponse.token)));
         this.location.go(`/dashboard/${gameResponse.token}`);
       }).catch(reason => {
       this.model.error = true;

@@ -3,18 +3,14 @@
   <tbody>
   <tr *ngFor="let row of model.game.board.cells.cells">
     <td *ngFor="let cell of row"
-        [ngClass]="{
-            'grey lighten-2' : !cell.isColorLight,
-            'white' : cell.isColorLight,
-            'possible-blue': isActive(cell) && isActiveColor1(),
-             'possible-red': isActive(cell) && !isActiveColor1()
-            }" (click)="move(getMoveFromCell(cell));">
+        [ngClass]="boardClasses(cell)"
+        (click)="move(getMoveFromCell(cell));">
 
       <a *ngIf="cell.pawn" class="btn-floating btn-medium waves-effect waves-light"
-         [ngClass]="{red: cell.pawn.isColorWhite, blue:!cell.pawn.isColorWhite, hoverable: isPossiblePawn(cell)}" (click)="select(cell);">
+         [ngClass]="pawnClasses(cell)" (click)="select(cell);">
         <!--      materialize="tooltip" data-position="bottom" data-delay="500" data-tooltip="This is not your turn"-->
         <i *ngIf="cell.pawn.isQueen">
-          <img src="{{crownIconPath}}"/>
+          <img src="{{model.icons.crown_image}}"/>
         </i>
       </a>
       <span *ngIf="debug && cell.pawn == null">
@@ -54,21 +50,17 @@
   </li>
 </ul>
 
-<!--
- Modal Trigger
-<a class="waves-effect waves-light btn" (click)="openModal();  $event.stopPropagation();">Modal</a>
--->
 
 <!-- Modal Structure -->
-<div id="delete-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
+<div class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]"
      [materializeActions]="modalActions">
   <div class="modal-content center-align">
     <div *ngIf="winningUser" class="row">
       <div class="col s12 m6 center-align score flex">
-        <h4 *ngIf="winningUser.colorPawn == 'WHITE'" class="red-text">{{winningUser.name}} wins!</h4>
+        <h4 *ngIf="winningUser.colorPawn == 'WHITE'" class="red-text">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
       </div>
       <div class="col s12 m6 center-align score flex">
-        <h4 *ngIf="winningUser.colorPawn == 'BLACK'" class="blue-text">{{winningUser.name}} wins!</h4>
+        <h4 *ngIf="winningUser.colorPawn == 'BLACK'" class="blue-text">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
       </div>
     </div>
 

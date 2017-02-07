@@ -1,6 +1,10 @@
 import {CheckersGameImpl} from "./checkers-game-impl.model";
 import {MoveResult} from "./move-result.model";
 import {Turn} from "./turn.model";
+import {MaterialColors} from "./colors.model";
+import {Urls} from "./urls.model";
+import {Icons} from "./icons.model";
+import {Vocabulary} from "./vocabulary.model";
 export class Model {
   _error: boolean = false;
   _loading: boolean = false;
@@ -9,6 +13,11 @@ export class Model {
 
   game: CheckersGameImpl;
   token: string;
+
+  colors: MaterialColors = new MaterialColors();
+  urls: Urls = new Urls();
+  icons: Icons = new Icons();
+  vocabulary: Vocabulary = new Vocabulary();
 
   get error(): boolean {
     return this._error;

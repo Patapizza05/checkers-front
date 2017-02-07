@@ -5,8 +5,8 @@ module.exports = function(config) {
   var appAssets  = '/base/app/'; // component assets fetched by Angular's compiler
 
   // Testing helpers (optional) are conventionally in a folder called `testing`
-  var testingBase    = 'testing/'; // transpiled test JS and map files
-  var testingSrcBase = 'testing/'; // test source TS files
+  var testingBase    = 'testing/'; // transpiled boardClasses JS and map files
+  var testingSrcBase = 'testing/'; // boardClasses source TS files
 
   config.set({
     basePath: '',
@@ -43,10 +43,10 @@ module.exports = function(config) {
       'node_modules/zone.js/dist/zone.js',
       'node_modules/zone.js/dist/long-stack-trace-zone.js',
       'node_modules/zone.js/dist/proxy.js',
-      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/sync-boardClasses.js',
       'node_modules/zone.js/dist/jasmine-patch.js',
-      'node_modules/zone.js/dist/async-test.js',
-      'node_modules/zone.js/dist/fake-async-test.js',
+      'node_modules/zone.js/dist/async-boardClasses.js',
+      'node_modules/zone.js/dist/fake-async-boardClasses.js',
 
       // RxJs
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
@@ -59,7 +59,7 @@ module.exports = function(config) {
 
       { pattern: 'systemjs.config.js', included: false, watched: false },
       { pattern: 'systemjs.config.extras.js', included: false, watched: false },
-      'karma-test-shim.js', // optionally extend SystemJS mapping e.g., with barrels
+      'karma-boardClasses-shim.js', // optionally extend SystemJS mapping e.g., with barrels
 
       // transpiled application & spec code paths loaded via module imports
       { pattern: appBase + '**/*.js', included: false, watched: true },

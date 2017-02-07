@@ -4,13 +4,16 @@ import {User} from "./user.model";
 
 
 export class Cell {
+
+  static get COLOR_CELL_LIGHT(): string { return 'LIGHT'; }
+  static get COLOR_CELL_DARK(): string { return 'DARK'; }
+
   color: string;
   pawn: Pawn;
   position: Position;
 
-  get isColorLight(): boolean {
-    return this.color == 'LIGHT';
-  }
+  get isColorLight(): boolean { return this.color == Cell.COLOR_CELL_LIGHT; }
+  get isColorDark(): boolean { return !this.isColorLight; }
 
   get row(): number {
     return this.position.row;

@@ -33,7 +33,7 @@ export abstract class HttpService {
   }
 
   handleError(error: any, url: string): Promise<any> {
-    console.error('An error occured at', url); //for demo purposes only
+    console.error('An select_error occured at', url); //for demo purposes only
     console.error(error);
     return Promise.reject(error.message || error);
   }

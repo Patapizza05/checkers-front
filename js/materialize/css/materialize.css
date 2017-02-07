@@ -2475,8 +2475,8 @@ input[type="search"] {
 }
 
 /**
- * Remove inner padding and search cancel button in Safari and Chrome on OS X.
- * Safari (but not Chrome) clips the cancel button when the search input has
+ * Remove inner padding and search select_cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the select_cancel button when the search input has
  * padding (and `textfield` appearance).
  */
 input[type="search"]::-webkit-search-cancel-button,
@@ -6797,7 +6797,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 input[type=range] {
-  /* fix for FF unable to apply focus style bug  */
+  /* fix for FF unable to move_apply focus style bug  */
   border: 1px solid white;
   /*required for proper track sizing in FF*/
 }

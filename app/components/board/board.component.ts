@@ -19,47 +19,22 @@ import {User} from "../../model/user.model";
 })
 export class BoardComponent {
 
-  model: Model;
+  /** VARIABLES **/
 
-  winningUser: User = null;
-
-  get debug(): boolean {
-    return this.model.debug;
-  }
-
-  get token(): string {
-    return this.model.token;
-  }
-
+  private dashboard: DashboardComponent; //Parent
+  private model: Model;
+  private winningUser: User = null;
   private localGetPossibleMoves = false;
+  private activeCell: Cell;
+  private activeMoves: Move[] = [];
+  get debug(): boolean { return this.model.debug; }
+  get token(): string { return this.model.token; }
+  get game(): CheckersGameImpl { return this.model.game; }
+  set game(game: CheckersGameImpl) { this.model.game = game; }
+  get nextUser(): string { try { return this.game.board.nextUser; } catch (err) { return null; } }
+  set nextUser(nextUser: string) { this.game.board.nextUser = nextUser; }
 
-  dashboard: DashboardComponent; //Parent
-
-  get game(): CheckersGameImpl {
-    return this.model.game;
-  }
-
-  set game(game: CheckersGameImpl) {
-    this.model.game = game;
-  }
-
-  crownIconPath = 'resources/crown.png';
-
-  activeCell: Cell;
-  activeMoves: Move[] = [];
-
-  get nextUser(): string {
-    try {
-      return this.game.board.nextUser;
-
-    } catch (err) {
-      return null;
-    }
-  }
-
-  set nextUser(nextUser: string) {
-    this.game.board.nextUser = nextUser;
-  }
+  /** CONSTRUCTOR **/
 
   constructor(private checkersService: CheckersService,
               private modelService: ModelService,
@@ -68,76 +43,87 @@ export class BoardComponent {
     this.model = modelService.model;
   }
 
+  /** GAME METHODS **/
 
+  //SELECT
   select(cell: Cell) {
-
-    if (this.activeCell == cell) {
-      this.activeCell = null;
-      this.activeMoves = [];
+    if (this.select_cancel(cell) || this.select_error(cell)) {
       return;
     }
+    this.getPossibleMoves(cell);
+  }
 
-    if (cell != null && cell.pawn != null && cell.pawn.color == this.game.board.nextUser) {
-
+  select_cancel(cell: Cell): boolean {
+    if (this.activeCell == cell) { //Clicking on the active cell : Cancel
+      this.activeCell = null;
       this.activeMoves = [];
+      return true;
+    }
+    return false;
+  }
 
+  select_error(cell: Cell): boolean {
+    return cell == null || cell.pawn == null || cell.pawn.color != this.game.board.nextUser;
+  }
 
-      let moves: Move[] = [];
-      if (this.localGetPossibleMoves) {
-        moves = this.game.board.getPossibleMoves(cell);
-      }
-      else {
-        this.checkersService.getPossibleMoves(this.token, cell.position)
-          .then(response => {
-            moves = response;
-            for (let move of moves) {
-              this.activeCell = cell;
-              this.activeMoves.push(move);
-            }
-          })
-          .catch(err => {
-            moves = this.game.board.getPossibleMoves(cell);
-            for (let move of moves) {
-              this.activeCell = cell;
-              this.activeMoves.push(move);
-            }
-          })
-      }
+  getPossibleMoves(cell: Cell): void {
+    this.activeMoves = [];
 
-
+    if (this.localGetPossibleMoves) {
+      this.getPossibleMoves_local(cell);
+    }
+    else {
+      this.getPossibleMoves_remote(cell);
     }
   }
 
-  move(move: Move) {
-    if (this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null) return false;
+  getPossibleMoves_local(cell: Cell): void {
+    let moves = this.game.board.getPossibleMoves(cell);
+    for (let move of moves) {
+      this.activeCell = cell;
+      this.activeMoves.push(move);
+    }
+  }
 
+  getPossibleMoves_remote(cell: Cell): void {
+    let moves: Move[] = [];
+    this.checkersService.getPossibleMoves(this.token, cell.position)
+      .then(response => {
+        moves = response;
+        for (let move of moves) {
+          this.activeCell = cell;
+          this.activeMoves.push(move);
+        }
+      })
+      .catch(err => {
+        moves = this.game.board.getPossibleMoves(cell);
+        for (let move of moves) {
+          this.activeCell = cell;
+          this.activeMoves.push(move);
+        }
+      })
+  }
+
+  //MOVE
+  move(move: Move) {
+    if (this.move_error(move)) {
+      return;
+    }
     this.checkersService.play(this.token, new PlayRequest(this.activeCell.position, move.destination.position))
       .then(moveResult => {
-        this.apply(moveResult);
+        this.move_apply(moveResult);
       });
+  }
 
-
+  move_error(move: Move):boolean {
+    return this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null
   }
 
   getMoveFromCell(cell: Cell): Move {
     return this.activeMoves.find(m => m.destination.equals(cell));
   }
 
-  isActive(cell: Cell) {
-    return this.activeMoves.find(m => m.destination.equals(cell)) != null;
-
-  }
-
-  isActiveColor1(): boolean {
-    return this.activeCell != null && this.activeCell.pawn != null && !this.activeCell.pawn.isColorWhite;
-  }
-
-  isPossiblePawn(cell: Cell): boolean {
-    return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextUser : false;
-  }
-
-
-  apply(moveResult: MoveResult) {
+  move_apply(moveResult: MoveResult) {
     this.model.apply(moveResult);
     this.activeCell = null;
     this.activeMoves = [];
@@ -147,6 +133,48 @@ export class BoardComponent {
     }
   }
 
+  /** UI **/
+
+  //MaterialColors
+  boardClasses(cell: Cell): {[key: string]: boolean} {
+    let result: {[key: string]: boolean} = {};
+    let isPossibleDestinationCell = this.isPossibleDestinationCell(cell);
+    let isActivePawnWhite = this.isActivePawnWhite();
+
+    result[this.model.colors.light_cells] = cell.isColorLight;
+    result[this.model.colors.dark_cells] = cell.isColorDark;
+    result[this.model.colors.player_top_white_possible_cells] = isPossibleDestinationCell && isActivePawnWhite;
+    result[this.model.colors.player_bottom_black_possible_cells] = isPossibleDestinationCell && !isActivePawnWhite;
+
+    return result;
+  };
+
+  pawnClasses(cell: Cell): {[key: string]:boolean} {
+    let result: {[key: string]: boolean} = {};
+    let pawn = cell.pawn;
+    let isColorWhite = pawn.isColorWhite;
+
+    result[this.model.colors.player_top_white] = isColorWhite;
+    result[this.model.colors.player_bottom_black] = !isColorWhite;
+    result[this.model.colors.movable_pawn] = this.isPawnMovable(cell);
+
+    return result;
+  }
+
+  isPossibleDestinationCell(cell: Cell) {
+    return this.activeMoves.find(m => m.destination.equals(cell)) != null;
+  }
+
+  isActivePawnWhite(): boolean {
+    return this.activeCell != null && this.activeCell.pawn != null && this.activeCell.pawn.isColorWhite;
+  }
+
+  isPawnMovable(cell: Cell): boolean {
+    return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextUser : false;
+  }
+
+
+  //Modal
   modalActions = new EventEmitter<string|MaterializeAction>();
 
   openModal() {

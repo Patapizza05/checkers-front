@@ -1,13 +1,13 @@
 <nav>
-  <div class="nav-wrapper red">
+  <div class="nav-wrapper {{model.colors.navbar_background}}">
     <ul class="left">
-      <li [routerLink]="['/games']" routerLinkActive="active"><a [routerLink]="['/games']">Games</a></li>
-      <li [routerLink]="['/dashboard', 'new']" routerLinkActive="active"><a [routerLink]="['/dashboard', 'new']">New</a>
+      <li [routerLink]="model.urls.games()" routerLinkActive="active"><a [routerLink]="model.urls.games()">{{model.vocabulary.games}}</a></li>
+      <li [routerLink]="model.urls.new()" routerLinkActive="active"><a [routerLink]="model.urls.new()">{{model.vocabulary.new_game}}</a>
       </li>
 
     </ul>
     <ul *ngIf="model && model.token" class="right">
-      <li><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">more_vert</i></a></li>
+      <li><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">{{model.icons.more_vert}}</i></a></li>
     </ul>
   </div>
 </nav>
@@ -17,9 +17,9 @@
   <li>
     <a>
       <input [(ngModel)]="model.debug" type="checkbox" class="filled-in" id="filled-in-box"/>
-      <label for="filled-in-box">Debug</label>
+      <label for="filled-in-box">{{model.vocabulary.debug}}</label>
     </a>
   </li>
-  <li><a (click)="skip(); false;">Skip</a></li>
+  <li><a (click)="skip(); false;">{{model.vocabulary.skip}}</a></li>
   <!--  <li class="divider"></li>-->
 </ul>
