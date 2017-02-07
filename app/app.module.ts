@@ -5,7 +5,7 @@ import {AppComponent}  from './components/app.component';
 import "/node_modules/materialize-css"
 import {MaterializeModule} from 'angular2-materialize';
 import {FormsModule} from "@angular/forms";
-import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {GameComponent} from "./components/game/game.component";
 import {HttpModule} from "@angular/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {NavBarComponent} from "./components/navbar/navbar.component";
@@ -17,7 +17,7 @@ import {GamesComponent} from "./components/games/games.component";
 
 
 @NgModule({
-  declarations: [DashboardComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent, GamesComponent],
+  declarations: [GameComponent, AppComponent, NavBarComponent, BoardComponent, PlayerInformationComponent, GamesComponent],
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, MaterializeModule],
   providers: [CheckersService, ModelService],
   bootstrap: [AppComponent]

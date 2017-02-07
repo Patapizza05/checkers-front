@@ -5,7 +5,7 @@ import {CheckersGameImpl} from "../../model/checkers-game-impl.model";
 import {Cell} from "../../model/cell.model";
 import {MoveResult} from "../../model/move-result.model";
 import {Model} from "../../model/model.model";
-import {DashboardComponent} from "../dashboard/dashboard.component";
+import {GameComponent} from "../game/game.component";
 import {ModelService} from "../../services/model.service";
 import {PlayRequest} from "../../model/requests/play-request.model";
 import {MaterializeAction} from "angular2-materialize";
@@ -21,7 +21,7 @@ export class BoardComponent {
 
   /** VARIABLES **/
 
-  private dashboard: DashboardComponent; //Parent
+  private dashboard: GameComponent; //Parent
   private model: Model;
   private winningUser: User = null;
   private localGetPossibleMoves = false;
@@ -60,7 +60,7 @@ export class BoardComponent {
 
   constructor(private checkersService: CheckersService,
               private modelService: ModelService,
-              @Host() @Inject(forwardRef(() => DashboardComponent)) dashboard: DashboardComponent) {
+              @Host() @Inject(forwardRef(() => GameComponent)) dashboard: GameComponent) {
     this.dashboard = dashboard;
     this.model = modelService.model;
   }

@@ -10,10 +10,10 @@ import {Urls} from "../../model/urls.model";
 @Component({
   moduleId: module.id,
   selector: 'my-dashboard',
-  templateUrl: 'dashboard.component.html',
+  templateUrl: 'game.component.html',
 
 })
-export class DashboardComponent implements OnInit {
+export class GameComponent implements OnInit {
 
   /** VARIABLES **/
 
