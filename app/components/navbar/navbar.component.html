@@ -6,20 +6,19 @@
       </li>
 
     </ul>
-    <ul *ngIf="model && model.token" class="right">
-      <li><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">{{model.icons.more_vert}}</i></a></li>
+    <ul class="right">
+      <li [style.visibility]="model && model.game ? 'visible':'hidden'"><a materialize="dropdown" data-activates="dropdown1"><i class="material-icons">{{model.icons.more_vert}}</i></a></li>
     </ul>
   </div>
 </nav>
 
 <!-- Dropdown Structure -->
 <ul id='dropdown1' class='dropdown-content'>
-  <li>
+  <li *ngIf="model && model.game">
     <a>
       <input [(ngModel)]="model.debug" type="checkbox" class="filled-in" id="filled-in-box"/>
       <label for="filled-in-box">{{model.vocabulary.debug}}</label>
     </a>
   </li>
-  <li><a (click)="skip(); false;">{{model.vocabulary.skip}}</a></li>
-  <!--  <li class="divider"></li>-->
+  <li *ngIf="model && model.game"><a (click)="skip(); false;">{{model.vocabulary.skip}}</a></li>
 </ul>

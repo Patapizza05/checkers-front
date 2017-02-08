@@ -85,7 +85,7 @@ export class BoardComponent {
   }
 
   select_error(cell: Cell): boolean {
-    return cell == null || cell.pawn == null || cell.pawn.color != this.game.board.nextUser;
+    return cell == null || cell.pawn == null || cell.pawn.color != this.game.board.nextUser || this.game.board.isFinished;
   }
 
   getPossibleMoves(cell: Cell): void {
@@ -138,7 +138,7 @@ export class BoardComponent {
   }
 
   move_error(move: Move): boolean {
-    return this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null
+    return this.activeCell == null || this.activeCell.pawn == null || move == null || move.destination == null || this.game.board.isFinished
   }
 
   getMoveFromCell(cell: Cell): Move {

@@ -1,7 +1,10 @@
 <div class="container">
-  <ul materialize="collapsible" class="collapsible popout" data-collapsible="accordion">
-    <li *ngFor="let game of games">
 
+  <!-- CURRENT GAMES -->
+
+  <h2 class="header {{model.colors.navbar_background_as_text}}">Current games</h2>
+  <ul *ngIf="games" materialize="collapsible" class="collapsible popout" style="margin-bottom:50px" data-collapsible="accordion">
+    <li *ngFor="let game of currentGames">
 
       <div class="collapsible-header">
         <span *ngIf="game.userBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
@@ -53,10 +56,57 @@
     </li>
   </ul>
 
-  <div *ngIf="games && !error && games.length == 0" class="row center-align">
+  <div *ngIf="games && !error && currentGames.length == 0" class="row center-align">
     <a [routerLink]="model.urls.new()" class="waves-effect waves-light btn red"><i
       class="material-icons right">{{model.icons.new_icon}}</i>{{model.vocabulary.new_game_long}}</a>
   </div>
+
+  <!-- ENDED GAMES -->
+  <h2 *ngIf="games && endedGames != null && endedGames.length > 0" class="header {{model.colors.navbar_background_as_text}}">Ended games</h2>
+  <ul *ngIf="games && endedGames != null && endedGames.length > 0" style="margin-bottom:50px" materialize="collapsible" class="collapsible popout" data-collapsible="accordion">
+    <li *ngFor="let game of endedGames">
+
+      <div class="collapsible-header">
+        <span *ngIf="game.userBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
+        <span *ngIf="game.userWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
+
+
+        <i class="material-icons"
+           [ngClass]="gamesClasses(game)"
+        >
+          {{model.icons.game_icon}}
+        </i>
+        {{ game.dateFormat }}
+      </div>
+
+
+      <div class="collapsible-body">
+        <div class="row collapsible-body-row">
+          <div class="col s3 valign center-align">
+            <a *ngIf="game.userWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
+              {{ game.userWhite.nbPawns }}
+            </a>
+            <p>{{game.userWhite.name}}</p>
+          </div>
+          <div class="col s3 offset-s6 valign center-align">
+            <a *ngIf="game.userBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
+              {{ game.userBlack.nbPawns }}
+            </a>
+            <p>{{game.userBlack.name}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s11"></div>
+          <div class="col s1">
+            <a (click)="deleteGame(game.token); false;" class="btn-floating btn-small waves-effect {{model.colors.delete_button_background}}"><i
+              class="material-icons {{model.colors.delete_button_color}}">{{model.icons.delete_icon}}</i></a>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+
 
   <div *ngIf="error || loading" class="flex error">
     <div *ngIf="loading" class="preloader-wrapper big active">

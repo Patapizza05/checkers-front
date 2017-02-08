@@ -15,7 +15,15 @@ export class GamesComponent {
   get model(): Model { return this.modelService.model; }
   loading: boolean = false;
   error: boolean = false;
-  games: LightGame[];
+  games: LightGame[]
+
+  get endedGames(): LightGame[] {
+    return this.games != null ? this.games.filter(g => g.users.find(u => u.nbPawns <= 0) != null) : null;
+  }
+
+  get currentGames(): LightGame[] {
+    return this.games != null ? this.games.filter(g => g.users.find(u => u.nbPawns <= 0) == null) : null;
+  }
 
   constructor(private checkersService: CheckersService,
   private modelService: ModelService) {

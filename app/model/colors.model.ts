@@ -14,6 +14,7 @@ export class MaterialColors {
   private get blueText(): string { return this.text(this.blue) }
 
   get navbar_background(): string { return this.red; }
+  get navbar_background_as_text(): string { return this.text(this.red); }
 
   private get transparent_blue(): string { return 'possible-blue'; }
   private get transparent_red(): string { return 'possible-red'; }

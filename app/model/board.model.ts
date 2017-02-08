@@ -13,6 +13,10 @@ export class Board {
   userWhite: User;
   nextUser: string;
 
+  get isFinished(): boolean {
+    return this.userWhite.nbPawns == 0 || this.userBlack.nbPawns == 0;
+  }
+
 
   getUser(pawn: Pawn): User {
     if (pawn.color == this.userBlack.colorPawn) {
