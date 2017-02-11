@@ -52,8 +52,8 @@ export class Model {
         if (moveResult.kill != null) {
           let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
           this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
-          this.game.board.playerWhite.nbPawns = moveResult.nbPawnsUserWhite;
-          this.game.board.playerBlack.nbPawns = moveResult.nbPawnsUserBlack;
+          this.game.board.playerWhite.nbPawns = moveResult.nbPawnsPlayerWhite;
+          this.game.board.playerBlack.nbPawns = moveResult.nbPawnsPlayerBlack;
         }
 
         let origin = this.game.board.cells.getFromPosition(moveResult.origin);

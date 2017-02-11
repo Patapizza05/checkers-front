@@ -6,8 +6,8 @@ export class MoveResult {
   kill: Position;
   becomesQueen: boolean;
   nextUser: string;
-  nbPawnsUserWhite: number;
-  nbPawnsUserBlack: number;
+  nbPawnsPlayerWhite: number;
+  nbPawnsPlayerBlack: number;
   winningMove: boolean;
 
   public static fromJson(json : MoveResult) : MoveResult {
@@ -19,8 +19,8 @@ export class MoveResult {
     moveResult.kill = json.kill ? Position.fromJson(json.kill) : null;
     moveResult.becomesQueen = json.becomesQueen;
     moveResult.nextUser = json.nextUser;
-    moveResult.nbPawnsUserBlack = json.nbPawnsUserBlack;
-    moveResult.nbPawnsUserWhite = json.nbPawnsUserWhite;
+    moveResult.nbPawnsPlayerBlack = json.nbPawnsPlayerBlack;
+    moveResult.nbPawnsPlayerWhite = json.nbPawnsPlayerWhite;
     moveResult.winningMove = json.winningMove;
     return moveResult;
   }

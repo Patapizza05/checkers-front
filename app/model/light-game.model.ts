@@ -4,7 +4,7 @@ export class LightGame {
 
   date: number;
   token: String;
-  users: LightUser[];
+  players: LightUser[];
 
   get dateFormat(): String {
     var datePipe = new DatePipe('fr-FR');
@@ -16,7 +16,7 @@ export class LightGame {
     let lightGame = new LightGame();
     lightGame.date = json.date;
     lightGame.token = json.token;
-    lightGame.users = LightUser.fromJsonArray(json.users);
+    lightGame.players = LightUser.fromJsonArray(json.players);
     return lightGame;
 
   }
@@ -32,11 +32,11 @@ export class LightGame {
   }
 
   get playerWhite(): LightUser {
-    return this.users.find(user => user.color == 'WHITE');
+    return this.players.find(user => user.color == 'WHITE');
   }
 
   get playerBlack(): LightUser {
-    return this.users.find(user => user.color == 'BLACK');
+    return this.players.find(user => user.color == 'BLACK');
   }
 
 }

@@ -18,11 +18,11 @@ export class GamesComponent {
   games: LightGame[]
 
   get endedGames(): LightGame[] {
-    return this.games != null ? this.games.filter(g => g.users.find(u => u.nbPawns <= 0) != null) : null;
+    return this.games != null ? this.games.filter(g => g.players.find(u => u.nbPawns <= 0) != null) : null;
   }
 
   get currentGames(): LightGame[] {
-    return this.games != null ? this.games.filter(g => g.users.find(u => u.nbPawns <= 0) == null) : null;
+    return this.games != null ? this.games.filter(g => g.players.find(u => u.nbPawns <= 0) == null) : null;
   }
 
   constructor(private checkersService: CheckersService,
