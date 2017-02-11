@@ -4,7 +4,7 @@ Front made with Angular 2 to use with [Checkers-JEE repository](https://github.c
 
 ## Server
 
-Source code is available at https://github.com/pierredfc/checkers-jee.
+Source code is available at https://github.com/pierredfc/checkers-jee. 
 
 ## Front
 
@@ -27,6 +27,6 @@ npm start
 
 ### Screenshots
 
-![Home page][screenshots/games.png]
+![Home page](https://github.com/Patapizza05/checkers-front/raw/master/screenshots/games.png)
 
-![Game page][screenshots/game.png]
+![Game page](https://github.com/Patapizza05/checkers-front/raw/master/screenshots/game.png)
