@@ -1,6 +1,10 @@
 # Checkers game for JEE Labs
 
-Front made with Angular 2 to use with [Checkers-JEE repository](https://travis-ci.org/pierredfc/checkers-jee).
+Front made with Angular 2 to use with [Checkers-JEE repository](https://github.com/pierredfc/checkers-jee).
+
+## Server
+
+Source code is available at https://github.com/pierredfc/checkers-jee.
 
 ## Front
 
@@ -21,6 +25,8 @@ npm install
 npm start
 ```
 
-## Server
+### Screenshots
 
-Source code is available at https://github.com/pierredfc/checkers-jee.
+![Home page][screenshots/games.png]
+
+![Game page][screenshots/game.png]
