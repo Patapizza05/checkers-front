@@ -2,10 +2,6 @@
 
 Front made with Angular 2 to use with [Checkers-JEE repository](https://travis-ci.org/pierredfc/checkers-jee).
 
-## Server
-
-Source code is available at https://github.com/pierredfc/checkers-jee.
-
 ## Front
 
 ### Quick start
@@ -24,3 +20,7 @@ npm install
 # start the server
 npm start
 ```
+
+## Server
+
+Source code is available at https://github.com/pierredfc/checkers-jee.
