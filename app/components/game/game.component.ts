@@ -77,7 +77,6 @@ export class GameComponent implements OnInit {
     this.game = gameResponse.game;
     this.token = gameResponse.token;
     this.model.loading = false;
-    console.log(this.model);
     this.loadHistory(gameResponse.token);
   }
 

@@ -48,7 +48,6 @@ export class Model {
   }
 
   apply(moveResult: MoveResult) {
-    console.log(moveResult);
       if (moveResult != null) {
         if (moveResult.kill != null) {
           let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;

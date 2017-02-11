@@ -44,18 +44,6 @@ export class BoardComponent {
     this.model.game = game;
   }
 
-  get nextUser(): string {
-    try {
-      return this.game.board.nextPlayer;
-    } catch (err) {
-      return null;
-    }
-  }
-
-  set nextUser(nextUser: string) {
-    this.game.board.nextPlayer = nextUser;
-  }
-
   /** CONSTRUCTOR **/
 
   constructor(private checkersService: CheckersService,
