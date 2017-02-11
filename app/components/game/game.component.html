@@ -1,6 +1,6 @@
 <div class="row">
-  <my-player-information *ngIf="model.game" [user]="model.game.board.userWhite" class="col s12 l2 offset-l1"></my-player-information>
+  <my-player-information *ngIf="model.game" [user]="model.game.board.playerWhite" class="col s12 l2 offset-l1"></my-player-information>
   <my-board class="col s12 l6" [ngClass]="{'offset-l3' : !model.game}"></my-board>
-  <my-player-information *ngIf="model.game" [user]="model.game.board.userBlack" class="col s12 l2"></my-player-information>
+  <my-player-information *ngIf="model.game" [user]="model.game.board.playerBlack" class="col s12 l2"></my-player-information>
 </div>
 

@@ -7,8 +7,8 @@
     <li *ngFor="let game of currentGames">
 
       <div class="collapsible-header">
-        <span *ngIf="game.userBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
-        <span *ngIf="game.userWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
+        <span *ngIf="game.playerBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.playerBlack.nbPawns}}</span>
+        <span *ngIf="game.playerWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.playerWhite.nbPawns}}</span>
 
 
         <i class="material-icons"
@@ -23,10 +23,10 @@
       <div class="collapsible-body">
         <div class="row collapsible-body-row">
           <div class="col s3 valign center-align">
-            <a *ngIf="game.userWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
-              {{ game.userWhite.nbPawns }}
+            <a *ngIf="game.playerWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
+              {{ game.playerWhite.nbPawns }}
             </a>
-            <p>{{game.userWhite.name}}</p>
+            <p>{{game.playerWhite.name}}</p>
           </div>
           <div class="col s6 valign center-align">
             <div class="board-pattern valign center-align">
@@ -39,10 +39,10 @@
             </div>
           </div>
           <div class="col s3 valign center-align">
-            <a *ngIf="game.userBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
-              {{ game.userBlack.nbPawns }}
+            <a *ngIf="game.playerBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
+              {{ game.playerBlack.nbPawns }}
             </a>
-            <p>{{game.userBlack.name}}</p>
+            <p>{{game.playerBlack.name}}</p>
           </div>
         </div>
         <div class="row">
@@ -67,8 +67,8 @@
     <li *ngFor="let game of endedGames">
 
       <div class="collapsible-header">
-        <span *ngIf="game.userBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.userBlack.nbPawns}}</span>
-        <span *ngIf="game.userWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.userWhite.nbPawns}}</span>
+        <span *ngIf="game.playerBlack" class="new badge {{model.colors.badge_player_bottom_black}}" data-badge-caption="">{{game.playerBlack.nbPawns}}</span>
+        <span *ngIf="game.playerWhite" class="new badge {{model.colors.badge_player_top_white}}" data-badge-caption="">{{game.playerWhite.nbPawns}}</span>
 
 
         <i class="material-icons"
@@ -83,16 +83,16 @@
       <div class="collapsible-body">
         <div class="row collapsible-body-row">
           <div class="col s3 valign center-align">
-            <a *ngIf="game.userWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
-              {{ game.userWhite.nbPawns }}
+            <a *ngIf="game.playerWhite" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_top_white}}">
+              {{ game.playerWhite.nbPawns }}
             </a>
-            <p>{{game.userWhite.name}}</p>
+            <p>{{game.playerWhite.name}}</p>
           </div>
           <div class="col s3 offset-s6 valign center-align">
-            <a *ngIf="game.userBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
-              {{ game.userBlack.nbPawns }}
+            <a *ngIf="game.playerBlack" class="btn-floating btn-large waves-effect waves-light tooltipped {{model.colors.player_bottom_black}}">
+              {{ game.playerBlack.nbPawns }}
             </a>
-            <p>{{game.userBlack.name}}</p>
+            <p>{{game.playerBlack.name}}</p>
           </div>
         </div>
         <div class="row">

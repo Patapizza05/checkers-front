@@ -46,14 +46,14 @@ export class BoardComponent {
 
   get nextUser(): string {
     try {
-      return this.game.board.nextUser;
+      return this.game.board.nextPlayer;
     } catch (err) {
       return null;
     }
   }
 
   set nextUser(nextUser: string) {
-    this.game.board.nextUser = nextUser;
+    this.game.board.nextPlayer = nextUser;
   }
 
   /** CONSTRUCTOR **/
@@ -85,7 +85,7 @@ export class BoardComponent {
   }
 
   select_error(cell: Cell): boolean {
-    return cell == null || cell.pawn == null || cell.pawn.color != this.game.board.nextUser || this.game.board.isFinished;
+    return cell == null || cell.pawn == null || cell.pawn.color != this.game.board.nextPlayer || this.game.board.isFinished;
   }
 
   getPossibleMoves(cell: Cell): void {
@@ -192,7 +192,7 @@ export class BoardComponent {
   }
 
   isPawnMovable(cell: Cell): boolean {
-    return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextUser : false;
+    return cell.hasPawn() ? cell.pawn.color == this.model.game.board.nextPlayer : false;
   }
 
   private addClass(result: {[key: string]: boolean}, key: string, value: boolean): void {

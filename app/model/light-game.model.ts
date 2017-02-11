@@ -31,11 +31,11 @@ export class LightGame {
     return lightGames;
   }
 
-  get userWhite(): LightUser {
+  get playerWhite(): LightUser {
     return this.users.find(user => user.color == 'WHITE');
   }
 
-  get userBlack(): LightUser {
+  get playerBlack(): LightUser {
     return this.users.find(user => user.color == 'BLACK');
   }
 

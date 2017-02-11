@@ -9,21 +9,21 @@ import {Position} from "./position.model";
 
 export class Board {
   cells: Cells;
-  userBlack: User;
-  userWhite: User;
-  nextUser: string;
+  playerBlack: User;
+  playerWhite: User;
+  nextPlayer: string;
 
   get isFinished(): boolean {
-    return this.userWhite.nbPawns == 0 || this.userBlack.nbPawns == 0;
+    return this.playerWhite.nbPawns == 0 || this.playerBlack.nbPawns == 0;
   }
 
 
   getUser(pawn: Pawn): User {
-    if (pawn.color == this.userBlack.colorPawn) {
-      return this.userBlack;
+    if (pawn.color == this.playerBlack.colorPawn) {
+      return this.playerBlack;
     }
-    else if (pawn.color == this.userWhite.colorPawn) {
-      return this.userWhite;
+    else if (pawn.color == this.playerWhite.colorPawn) {
+      return this.playerWhite;
     }
     return null;
   }
@@ -112,9 +112,9 @@ export class Board {
   static fromJson(board: Board): Board {
     let self = new Board();
     self.cells = Cells.fromJson(board.cells);
-    self.userBlack = User.fromJson(board.userBlack);
-    self.userWhite = User.fromJson(board.userWhite);
-    self.nextUser = board.nextUser;
+    self.playerBlack = User.fromJson(board.playerBlack);
+    self.playerWhite = User.fromJson(board.playerWhite);
+    self.nextPlayer = board.nextPlayer;
     return self;
   }
 

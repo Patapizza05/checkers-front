@@ -25,7 +25,7 @@ export class PlayerInformationComponent {
   isEdit: boolean = false;
 
   isTurn(): boolean {
-    return this.user.colorPawn == this.model.game.board.nextUser;
+    return this.user.colorPawn == this.model.game.board.nextPlayer;
   }
 
 

@@ -53,8 +53,8 @@ export class Model {
         if (moveResult.kill != null) {
           let killPawn = this.game.board.cells.getFromPosition(moveResult.kill).pawn;
           this.game.board.cells.getFromPosition(moveResult.kill).pawn = null;
-          this.game.board.userWhite.nbPawns = moveResult.nbPawnsUserWhite;
-          this.game.board.userBlack.nbPawns = moveResult.nbPawnsUserBlack;
+          this.game.board.playerWhite.nbPawns = moveResult.nbPawnsUserWhite;
+          this.game.board.playerBlack.nbPawns = moveResult.nbPawnsUserBlack;
         }
 
         let origin = this.game.board.cells.getFromPosition(moveResult.origin);
@@ -66,7 +66,7 @@ export class Model {
           pawn.isQueen = true;
         }
 
-        this.game.board.nextUser = moveResult.nextUser;
+        this.game.board.nextPlayer = moveResult.nextUser;
 
         let turn: Turn = { origin: moveResult.origin, destination: moveResult.destination};
         this.game.history.push(turn);
