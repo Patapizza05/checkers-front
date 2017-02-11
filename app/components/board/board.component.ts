@@ -171,12 +171,44 @@ export class BoardComponent {
     return result;
   }
 
+  bottomBlackPlayerClasses(): {[key: string]: boolean} {
+    //{'btn-large': winningUser.colorPawn == 'BLACK', 'btn-medium': winningUser.colorPawn == 'WHITE'}
+    let result: {[key: string]: boolean} = {};
+
+    let isBlackWins = this.isBlackWins();
+
+    this.addClass(result, 'btn-large', isBlackWins);
+    this.addClass(result, 'btn-medium', !isBlackWins);
+
+    return result;
+  }
+
+  topWhitePlayerClasses(): {[key: string]: boolean} {
+    //{'btn-large': winningUser.colorPawn == 'WHITE', 'btn-medium': winningUser.colorPawn == 'BLACK'}
+    let result: {[key: string]: boolean} = {};
+
+    let isWhiteWins = this.isWhiteWins();
+
+    this.addClass(result, 'btn-large', isWhiteWins);
+    this.addClass(result, 'btn-medium', !isWhiteWins);
+
+    return result;
+  }
+
   isPossibleDestinationCell(cell: Cell) {
     return this.activeMoves.find(m => m.destination.equals(cell)) != null;
   }
 
   isActivePawnWhite(): boolean {
     return this.activeCell != null && this.activeCell.pawn != null && this.activeCell.pawn.isColorWhite;
+  }
+
+  isWhiteWins(): boolean {
+    return this.winningUser != null && this.winningUser.colorPawn == 'WHITE';
+  }
+
+  isBlackWins(): boolean {
+    return this.winningUser != null && this.winningUser.colorPawn == 'BLACK';
   }
 
   isPawnMovable(cell: Cell): boolean {

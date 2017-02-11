@@ -57,37 +57,40 @@
   <div class="modal-content center-align">
     <div *ngIf="winningUser" class="row">
       <div class="col s12 m6 center-align score flex">
-        <h4 *ngIf="winningUser.colorPawn == 'WHITE'" class="red-text">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
+        <h4 *ngIf="isWhiteWins()" class="{{model.colors.player_top_white_text}}">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
       </div>
       <div class="col s12 m6 center-align score flex">
-        <h4 *ngIf="winningUser.colorPawn == 'BLACK'" class="blue-text">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
+        <h4 *ngIf="isBlackWins()" class="{{model.colors.player_bottom_black_text}}">{{ this.model.vocabulary.wins(winningUser.name)}}</h4>
       </div>
     </div>
 
     <div *ngIf="winningUser" class="row valign-wrapper">
+      <!-- White -->
       <div class="col s12 m6 center-align score flex">
-        <a class="btn-floating waves-effect waves-light red"
-           [ngClass]="{'btn-large': winningUser.colorPawn == 'WHITE', 'btn-medium': winningUser.colorPawn == 'BLACK'}">
-          <i *ngIf="winningUser.colorPawn == 'WHITE'">
-            <img src="{{crownIconPath}}"/>
+        <a class="btn-floating waves-effect waves-light {{model.colors.player_top_white}}"
+           [ngClass]="topWhitePlayerClasses()">
+          <i *ngIf="isWhiteWins()">
+            <img src="{{model.icons.crown_image}}"/>
           </i>
         </a>
-        <h4 class="red-text">{{winningUser.colorPawn == 'WHITE' ? winningUser.nbPawns : 0}}</h4>
+        <h4 class="{{model.colors.player_top_white_text}}">{{winningUser.colorPawn == 'WHITE' ? winningUser.nbPawns : 0}}</h4>
       </div>
+
+      <!-- Black -->
       <div class="col s12 m6 center-align score flex">
-        <h4 class="blue-text">{{winningUser.colorPawn == 'BLACK' ? winningUser.nbPawns : 0}}</h4>
-        <a class="btn-floating waves-effect waves-light blue"
-           [ngClass]="{'btn-large': winningUser.colorPawn == 'BLACK', 'btn-medium': winningUser.colorPawn == 'WHITE'}">
-          <i *ngIf="winningUser.colorPawn == 'BLACK'">
-            <img src="{{crownIconPath}}"/>
+        <h4 class="{{model.colors.player_bottom_black_text}}">{{isBlackWins() ? winningUser.nbPawns : 0}}</h4>
+        <a class="btn-floating waves-effect waves-light {{model.colors.player_bottom_black}}"
+           [ngClass]="bottomBlackPlayerClasses()">
+          <i *ngIf="isBlackWins()">
+            <img src="{{model.icons.crown_image}}"/>
           </i>
         </a>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <a [routerLink]="['/games']" class="modal-action waves-effect waves-light btn-flat" (click)="closeModal();">Games</a>
-    <a [routerLink]="['/dashboard', 'new']" class="modal-action waves-effect waves-blue btn-flat" (click)="closeModal();">New</a>
+    <a [routerLink]="model.urls.games()" class="modal-action waves-effect waves-light btn-flat" (click)="closeModal();">{{model.vocabulary.games}}</a>
+    <a [routerLink]="model.urls.new()" class="modal-action waves-effect waves-blue btn-flat" (click)="closeModal();">{{model.vocabulary.new_game}}</a>
   </div>
 </div>
 
