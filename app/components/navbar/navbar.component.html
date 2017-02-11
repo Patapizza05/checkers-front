@@ -2,7 +2,7 @@
   <div class="nav-wrapper {{model.colors.navbar_background}}">
     <ul class="left">
       <li [routerLink]="model.urls.games()" routerLinkActive="active"><a [routerLink]="model.urls.games()">{{model.vocabulary.games}}</a></li>
-      <li [routerLink]="model.urls.new()" routerLinkActive="active"><a [routerLink]="model.urls.new()">{{model.vocabulary.new_game}}</a>
+      <li [routerLink]="model.urls.new()" routerLinkActive="active" [ngClass]="{'active': model.game != null}"><a [routerLink]="model.urls.new()">{{model.game != null ? model.vocabulary.game : model.vocabulary.new_game}}</a>
       </li>
 
     </ul>

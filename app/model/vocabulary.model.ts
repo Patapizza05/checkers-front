@@ -3,6 +3,7 @@ export class Vocabulary {
   get games(): string { return 'Games'; }
   get new_game(): string { return 'New'; }
   get new_game_long(): string { return 'New game'; }
+  get game(): string { return 'Game'; }
 
   get debug(): string { return 'Debug'; }
   get skip(): string { return 'Skip' ; }
