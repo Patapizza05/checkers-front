@@ -9,7 +9,7 @@ import {GameComponent} from "../game/game.component";
 import {ModelService} from "../../services/model.service";
 import {PlayRequest} from "../../model/requests/play-request.model";
 import {MaterializeAction} from "angular2-materialize";
-import {User} from "../../model/user.model";
+import {Player} from "../../model/user.model";
 
 @Component({
   moduleId: module.id,
@@ -23,7 +23,7 @@ export class BoardComponent {
 
   private dashboard: GameComponent; //Parent
   private model: Model;
-  private winningUser: User = null;
+  private winningUser: Player = null;
   private localGetPossibleMoves = false;
   private activeCell: Cell;
   private activeMoves: Move[] = [];

@@ -1,4 +1,4 @@
-import {User} from "./user.model";
+import {Player} from "./user.model";
 import {Cells} from "./cells.model";
 import {Pawn} from "./pawn.model";
 import {Cell} from "./cell.model";
@@ -9,8 +9,8 @@ import {Position} from "./position.model";
 
 export class Board {
   cells: Cells;
-  playerBlack: User;
-  playerWhite: User;
+  playerBlack: Player;
+  playerWhite: Player;
   nextPlayer: string;
 
   get isFinished(): boolean {
@@ -18,7 +18,7 @@ export class Board {
   }
 
 
-  getUser(pawn: Pawn): User {
+  getUser(pawn: Pawn): Player {
     if (pawn.color == this.playerBlack.colorPawn) {
       return this.playerBlack;
     }
@@ -28,7 +28,7 @@ export class Board {
     return null;
   }
 
-  getUserFromPosition(destination: Position):User {
+  getUserFromPosition(destination: Position):Player {
     try {
       return this.getUser(this.cells.getFromPosition(destination).pawn);
     } catch(err) {
@@ -112,8 +112,8 @@ export class Board {
   static fromJson(board: Board): Board {
     let self = new Board();
     self.cells = Cells.fromJson(board.cells);
-    self.playerBlack = User.fromJson(board.playerBlack);
-    self.playerWhite = User.fromJson(board.playerWhite);
+    self.playerBlack = Player.fromJson(board.playerBlack);
+    self.playerWhite = Player.fromJson(board.playerWhite);
     self.nextPlayer = board.nextPlayer;
     return self;
   }

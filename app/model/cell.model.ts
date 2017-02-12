@@ -1,6 +1,6 @@
 import {Position} from "./position.model";
 import {Pawn} from "./pawn.model";
-import {User} from "./user.model";
+import {Player} from "./user.model";
 
 
 export class Cell {
@@ -23,7 +23,7 @@ export class Cell {
     return this.position.column;
   }
 
-  becomesQueen(pawn: Pawn, user: User): boolean {
+  becomesQueen(pawn: Pawn, user: Player): boolean {
     if (pawn == null || user == null || pawn.color != user.colorPawn) return false;
 
     return this.row == user.queenRow;

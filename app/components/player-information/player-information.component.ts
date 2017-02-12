@@ -1,5 +1,5 @@
 import {Component, Input, EventEmitter} from "@angular/core";
-import {User} from "../../model/user.model";
+import {Player} from "../../model/user.model";
 import {Model} from "../../model/model.model";
 import {ModelService} from "../../services/model.service";
 import {CheckersService} from "../../services/checkers.service";
@@ -12,7 +12,7 @@ import {UserNameRequest} from "../../model/requests/user-name-request.model";
 })
 export class PlayerInformationComponent {
   @Input()
-  user: User;
+  user: Player;
 
   model: Model;
 

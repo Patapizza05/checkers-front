@@ -1,4 +1,4 @@
-import {CheckersGameImpl} from "./checkers-game-impl.model";
+import {CheckersGameImpl} from "../checkers-game-impl.model";
 export class GameResponse {
 
   token: string;

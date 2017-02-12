@@ -2,7 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {GameComponent} from "./components/game/game.component";
 import {GamesComponent} from "./components/games/games.component";
-import {Urls} from "./model/urls.model";
+import {Urls} from "./model/ui/urls.model";
 
 const routes: Routes = [
   { path: '', redirectTo: '/'+Urls.GAMES_URL, pathMatch: 'full' },

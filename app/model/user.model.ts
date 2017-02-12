@@ -1,4 +1,4 @@
-export class User {
+export class Player {
 
   static get COLOR_WHITE(): string { return 'WHITE'; }
   static get COLOR_BLACK(): string { return 'BLACK'; }
@@ -9,21 +9,21 @@ export class User {
   queenRow: number;
   name: string;
 
-  static fromJson(user: User): User {
-    let self = new User();
-    self.colorPawn = user.colorPawn;
-    self.pawnDirection = user.pawnDirection;
-    self.queenRow = user.queenRow;
-    self.nbPawns = user.nbPawns;
-    self.name = user.name;
+  static fromJson(json: Player): Player {
+    let self = new Player();
+    self.colorPawn = json.colorPawn;
+    self.pawnDirection = json.pawnDirection;
+    self.queenRow = json.queenRow;
+    self.nbPawns = json.nbPawns;
+    self.name = json.name;
     return self;
   }
 
   isColorWhite():boolean {
-    return this.colorPawn == User.COLOR_WHITE;
+    return this.colorPawn == Player.COLOR_WHITE;
   }
 
   isColorBlack():boolean {
-    return !this.isColorWhite();
+    return this.colorPawn == Player.COLOR_BLACK;
   }
 }

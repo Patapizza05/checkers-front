@@ -1,12 +1,12 @@
 import {HttpService, ContentType} from "./http-utils";
 import {Http} from "@angular/http";
 import {MoveResult} from "../model/move-result.model";
-import {LightGame} from "../model/light-game.model";
+import {LightGame} from "../model/responses/light-game.model";
 import {Move} from "../model/move.model";
 import {UserNameRequest} from "../model/requests/user-name-request.model";
 import {PlayRequest} from "../model/requests/play-request.model";
 import {Position} from "../model/position.model";
-import {GameResponse} from "../model/game-response.model";
+import {GameResponse} from "../model/responses/game-response.model";
 import {Turn} from "../model/turn.model";
 
 export abstract class CheckersApi extends HttpService {

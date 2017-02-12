@@ -1,9 +1,9 @@
-import {User} from "../user.model";
+import {Player} from "../user.model";
 export class UserNameRequest {
   color: String;
   name: String;
 
-  constructor(user: User) {
+  constructor(user: Player) {
     this.color = user.colorPawn;
     this.name = user.name;
   }

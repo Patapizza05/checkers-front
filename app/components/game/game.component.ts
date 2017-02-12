@@ -5,8 +5,8 @@ import {Model} from "../../model/model.model";
 import {ModelService} from "../../services/model.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
-import {GameResponse} from "../../model/game-response.model";
-import {Urls} from "../../model/urls.model";
+import {GameResponse} from "../../model/responses/game-response.model";
+import {Urls} from "../../model/ui/urls.model";
 @Component({
   moduleId: module.id,
   selector: 'my-dashboard',
